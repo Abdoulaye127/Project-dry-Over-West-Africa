@@ -1,0 +1,144 @@
+SET MEMORY/SIZE = 10000 ! set memory
+can data /all ! cancel all data
+can win /all ! cancel all windows
+set win/new ! set new window
+
+PPL AXLSZE 0.20,0.20
+PPL AXLSZE 0.20,0.20
+SET WINDOW/ASPECT = 1.0/size=3  ! Increase aspect ratio and size
+
+! Model evaluation
+!
+!use WASCAL_DTR_chirps_yearmean_1985_2014_WA_final.nc
+use cdd_chirps-v2.0.days_p25_1985_2014_REFERENCE.nc
+
+
+!------------------------------------------HISTORICAl
+
+!First model
+!use WASCAL_DTR_day_ACCESS-CM2_historical_1985_2014_WA_final_yearmean_℃.nc
+!Second model
+!use WASCAL_DTR_day_MIROC6_historical_1985_2014_WA_final_yearmean_℃.nc
+
+!Third model
+!use WASCAL_DTR_day_MPI-ESM1-2-HR_historical_1985_2014_WA_final_yearmean_℃.nc
+
+!Fourth model
+!use WASCAL_DTR_day_NorESM2-MM_historical_1985_2014_WA_final_yearmean_℃.nc
+
+
+!
+use cdd_pr_day_ACCESS-CM2_historical_1985_2014_Africa.nc 
+use cdd_pr_day_MIROC6_historical_1985_2014_Africa.nc
+use cdd_pr_day_MPI-ESM1-2-HR_historical_1985_2014_Africa.nc
+use cdd_pr_day_NorESM2-MM_historical_1985_2014_Africa.nc
+!
+
+
+
+!-------------------------------------------SCENARIO 126
+!use WASCAL_DTR_day_ACCESS-CM2_ssp126_2031_2060_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_ACCESS-CM2_ssp126_2070_2100_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_MIROC6_ssp126_2031_2060_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_MIROC6_ssp126_2070_2100_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_MPI-ESM1-2-HR_ssp126_2031_2060_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_MPI-ESM1-2-HR_ssp126_2070_2100_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_NorESM2-MM_ssp126_2031_2060_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_NorESM2-MM_ssp126_2070_2100_WA_final_yearmean_℃.nc
+
+!
+use cdd_pr_day_ACCESS-CM2_ssp126_2031-2060_Africa.nc
+use cdd_pr_day_ACCESS-CM2_ssp126_2071-2100_WestAfrica.nc
+use cdd_pr_day_MIROC6_ssp126_2031-2060_Africa.nc 
+use cdd_pr_day_MIROC6_ssp126_2071-2100_WestAfrica.nc       
+use cdd_pr_day_MPI-ESM1-2-HR_ssp126_2031-2060_Africa.nc    
+use cdd_pr_day_MPI-ESM1-2-HR_ssp126_2071-2100_WestAfrica.nc       
+use cdd_pr_day_NorESM2-MM_ssp126_2031-2060_Africa.nc              
+use cdd_pr_day_NorESM2-MM_ssp126_2071-2100_WestAfrica.nc
+
+
+!-------------------------------------------SCENARIO 585
+!use WASCAL_DTR_day_ACCESS-CM2_ssp585_2031_2060_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_ACCESS-CM2_ssp585_2070_2100_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_MIROC6_ssp585_2031_2060_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_MIROC6_ssp585_2070_2100_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_MPI-ESM1-2-HR_ssp585_2031_2060_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_MPI-ESM1-2-HR_ssp585_2070_2100_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_NorESM2-MM_ssp585_2031_2060_WA_final_yearmean_℃.nc
+!use WASCAL_DTR_day_NorESM2-MM_ssp585_2070_2100_WA_final_yearmean_℃.nc
+
+
+use cdd_pr_day_ACCESS-CM2_ssp245_2031-2060_Africa.nc
+use cdd_pr_day_ACCESS-CM2_ssp245_2071-2100_WestAfrica.nc
+use cdd_pr_day_MIROC6_ssp245_2031-2060_Africa.nc
+use cdd_pr_day_MIROC6_ssp245_2071-2100_WestAfrica.nc
+use cdd_pr_day_MPI-ESM1-2-HR_ssp245_2031-2060_Africa.nc
+use cdd_pr_day_MPI-ESM1-2-HR_ssp245_2071-2100_WestAfrica.nc
+use cdd_pr_day_NorESM2-MM_ssp245_2031-2060_Africa.nc
+use cdd_pr_day_NorESM2-MM_ssp245_2071-2100_WestAfrica.nc
+
+let obersvation_data = DIFF[l=@ave,d=1]
+
+!let model1 = DTR[l=@ave,d=2,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn]
+!let model2 = DTR[l=@ave,d=3,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn]
+!let model3 = DTR[l=@ave,d=4,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn]
+!let model4 = DTR[l=@ave,d=5,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn]
+
+!===========================================================================================
+
+let model1 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=2,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn]
+let model2 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=3,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn]
+let model3 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=4,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn]
+let model4 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=5,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn]
+
+
+
+let bias1 = model1 - obersvation_data
+let bias2 = model2 - obersvation_data
+let bias3 = model3 - obersvation_data
+let bias4 = model4 - obersvation_data
+let npy = 4
+let npx = 3
+
+! Adjust the panel size and gaps for clarity
+go multi_view npy, npx, 0.25, 0.05, 0.05, 0.1, 0.4, 0.05  ! Reduced Xsize and Xgap
+
+set VIEW V11
+PPL AXLABP -1 -1
+fill/pal=sunny_cmyk/nolabel obersvation_data;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 REFERENCE
+label 28 6 -1 90 0.12 @P1 degree Celcius
+
+set VIEW V12
+PPL AXLABP 0 0
+fill/pal=sunny_cmyk/nolabel model1;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 MODEL
+
+set VIEW V13
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel/lev=(-inf)(-3,3,1)(inf) bias1 ;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 ENSMEAN - ref
+
+set VIEW V22
+PPL AXLABP 0 0
+fill/pal=sunny_cmyk/nolabel model2;go land 7 "" 1
+
+set VIEW V23
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel/lev=(-inf)(-3,3,1)(inf) bias2 ; go land 7 "" 1
+
+set VIEW V32
+PPL AXLABP 0 0
+fill/pal=sunny_cmyk/nolabel model3;go land 7 "" 1
+
+set VIEW V33
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel/lev=(-inf)(-3,3,1)(inf) bias3 ;go land 7 "" 1
+
+set VIEW V42
+PPL AXLABP 0 0
+fill/pal=sunny_cmyk/nolabel model4;go land 7 "" 1
+
+set VIEW V43
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel/lev=(-inf)(-3,3,1)(inf) bias4 ;go land 7 "" 1

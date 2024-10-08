@@ -1,0 +1,99 @@
+!=================== Start of Script ===================
+
+! Clear previous settings
+CANCEL DATA/ALL
+CANCEL WINDOW/ALL
+SET WINDOW/NEW
+
+! Adjust the axis size for better visualization
+PPL AXLSZE 0.20, 0.20
+
+! Set the aspect ratio and increase window size
+SET WINDOW/ASPECT=1.0/SIZE=3.5
+
+!========================= Historical Data =============================
+use cdd_pr_day_Model_historical_1985_2014_WEST_AFRICA_Ensmean.nc
+
+!========================= Far Future Scenarios ==========================
+use cdd_pr_day_ssp126_2071-2100_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp245_2071-2100_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp585_2071-2100_west_Africa_Ensmean.nc
+
+!=================== Calculation of Consecutive Dry Days ====================
+LET historical = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[L=@AVE, D=1, K=@AVE]
+LET ssp126 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[L=@AVE, D=2, K=@AVE, GT=historical@ASN]
+LET ssp245 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[L=@AVE, D=3, K=@AVE, GT=historical@ASN]
+LET ssp585 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[L=@AVE, D=4, K=@AVE, GT=historical@ASN]
+
+
+!=================== Projection Differences (Far Future - Historical) =====================
+LET proj_ssp126 = ssp126 - historical
+LET proj_ssp245 = ssp245 - historical
+LET proj_ssp585 = ssp585 - historical
+
+!=================== Title Setup ====================
+! Add title for the whole figure (positioned above the maps)
+LABEL 0, 36, -1, 0, 0.30 @P8 Model Projection - Far Future
+
+!=================== Panel Setup =====================
+! Adjust the number of rows and columns
+LET npy = 3   ! Number of rows
+LET npx = 3   ! Number of columns
+
+! Set up multi-view with reduced gaps to fit within the window
+GO multi_view npy, npx, 0.25, 0.09, 0.06, 0.15, 0.4, 0.05
+
+!=================== Plotting =====================
+
+! Plot for Historical Data
+SET VIEWPORT V11
+PPL AXLABP -1, -1
+FILL/PAL=blue_gold/NOLABEL/LEV=(-inf)(0,365,50)(inf) historical
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.22 @P7 Historical 
+LABEL 28, 6, -1, 90, 0.15 @P1 
+
+! Plot for SSP126 Scenario Data
+SET VIEWPORT V12
+PPL AXLABP 0, 0
+FILL/PAL=blue_gold/NOLABEL/LEV=(-inf)(0,365,50)(inf) ssp126
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.22 @P7 SSP126-far
+
+! Plot for SSP126 vs Historical Difference
+SET VIEWPORT V13
+PPL AXLABP 0, 0
+FILL/PAL=default/NOLABEL/LEV=(-inf)(-3,3,1)(inf) proj_ssp126
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.22 @P7 SSP126-Historical
+
+! Plot for SSP245 Scenario Data
+SET VIEWPORT V22
+PPL AXLABP 0, 0
+FILL/PAL=blue_gold/NOLABEL/LEV=(-inf)(0,365,50)(inf) ssp245
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.22 @P7 SSP245-far
+
+! Plot for SSP245 vs Historical Difference
+SET VIEWPORT V23
+PPL AXLABP 0, 0
+FILL/PAL=default/NOLABEL/LEV=(-inf)(-3,3,1)(inf) proj_ssp245
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.22 @P7 SSP245-Historical
+
+! Plot for SSP585 Scenario Data
+SET VIEWPORT V32
+PPL AXLABP 0, 0
+FILL/PAL=blue_gold/NOLABEL/LEV=(-inf)(0,365,50)(inf) ssp585
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.22 @P7 SSP585-far
+
+! Plot for SSP585 vs Historical Difference
+SET VIEWPORT V33
+PPL AXLABP 0, 0
+FILL/PAL=default/NOLABEL/LEV=(-inf)(-3,3,1)(inf) proj_ssp585
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.22 @P7 SSP585-Historical
+
+!=================== End of Script ===================
+

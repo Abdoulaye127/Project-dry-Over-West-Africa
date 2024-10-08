@@ -1,0 +1,54 @@
+SET MEMORY/SIZE = 10000 ! set memory
+can data /all ! cancel all data
+can win /all ! cancel all windows
+set win/new ! set new window
+
+PPL AXLSZE 0.20,0.20
+PPL AXLSZE 0.20,0.20
+SET WINDOW/ASPECT = 1.0/size=3  ! Increase aspect ratio and size
+
+! Model evaluation
+
+
+!REFERENCE
+use cdd_chirps-v2.0.days_p25_1985_2014_REFERENCE.nc
+
+
+! MODEL HISTORICAL
+use cdd_pr_day_Model_historical_1985_2014_WEST_AFRICA_Ensmean.nc
+
+
+let obersvation_data = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=1]
+
+!===========================================================================================
+
+let model = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=2,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn,k=1]
+
+
+
+
+let bias = model - obersvation_data
+
+let npy = 1
+let npx = 3
+
+! Adjust the panel size and gaps for clarity
+go multi_view npy, npx, 0.25, 0.05, 0.05, 0.1, 0.4, 0.05  ! Reduced Xsize and Xgap
+
+set VIEW V11
+PPL AXLABP -1 -1
+fill/pal=cmocean_solar/nolabel obersvation_data;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 REFERENCE
+label 28 6 -1 90 0.12 @P1 cdd
+
+set VIEW V12
+PPL AXLABP 0 0
+fill/pal=cmocean_solar/nolabel model;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 MODEL
+
+set VIEW V13
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel/lev=(-inf)(-3,3,1)(inf) bias ;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 ENSMEAN - ref
+
+

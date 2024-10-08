@@ -1,0 +1,57 @@
+!=================== Start of Script ===================
+
+! Clear previous settings
+CANCEL DATA/ALL
+CANCEL WINDOW/ALL
+SET WINDOW/NEW
+
+! Increase the size of the window to maximum and remove almost all padding
+SET WINDOW/SIZE=10/ASPECT=0.8
+
+!========================= REFERENCE =============================
+use cdd_Merged_Chirps_1985_2014_p05_WestAfrica.nc
+
+!========================= ENSMEAN ==========================
+use cdd_pr_day_Model_historical_1985_2014_WEST_AFRICA_Ensmean.nc
+
+let obersvation_data = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=1]
+let model = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=2,GX=obersvation_data,GY=obersvation_data,GT=obersvation_data@asn,k=@ave]
+let bias = model - obersvation_data
+
+!=================== Panel Setup =====================
+
+let npy = 1
+let npx = 3
+
+! Maximize the use of space by reducing padding to almost zero
+GO multi_view npy, npx, 0.25, 0.09, 0.06, 0.17, 0.7, 0.06
+
+!=================== Plotting =====================
+
+! Plot for Observation Data
+SET VIEWPORT V11
+PPL AXLABP -1, -1
+FILL/PAL=orange_purple/NOLABEL/LEV=(-inf)(0,365,50)(inf) obersvation_data
+GO land 7 "" 1
+LABEL -5, 33, 0, 0, 0.20 @P1 Reference
+LABEL 28, 6, -1, 90, 0.20 @P1 
+
+! Plot for ENSMEAN Data
+SET VIEWPORT V12
+PPL AXLABP 0, 0
+FILL/PAL=orange_purple/NOLABEL/LEV=(-inf)(0,365,50)(inf) model
+GO land 7 "" 1
+LABEL -5, 33, 0, 0, 0.20 @P1 Ensemble Mean
+
+! Plot for ENSMEAN vs REFERENCE Difference
+SET VIEWPORT V13
+PPL AXLABP 0, 0
+FILL/PAL=orange_purple/NOLABEL/LEV=(-inf)(-3,3,1)(inf) bias
+GO land 7 "" 1
+LABEL -5, 33, 0, 0, 0.20 @P1 Ensembe mean - Reference
+
+!=================== End of Script ===================
+
+! Save the figure as a GIF file
+FRAME/file="dry_spell_analysis.gif"
+

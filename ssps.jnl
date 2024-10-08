@@ -1,0 +1,61 @@
+SET MEMORY/SIZE = 10000 ! set memory
+can data /all ! cancel all data
+can win /all ! cancel all windows
+set win/new ! set new window
+
+! Ajustez la taille de la fenêtre
+SET WINDOW/ASPECT = 1.0/size=4  ! Augmenter la taille
+
+!=========================================SCENARIO ====================================== 
+
+use cdd_pr_day_ssp126_2031-2060_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp126_2071-2100_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp245_2031-2060_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp245_2071-2100_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp585_2031-2060_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp585_2071-2100_west_Africa_Ensmean.nc
+
+!===========================================================================================
+
+let ssp126_near = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=1,k=@ave]
+let ssp126_far = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=2,k=@ave]
+let ssp245_near = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=3,k=@ave]
+let ssp245_far = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=4,k=@ave]
+let ssp585_near = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=5,k=@ave]
+let ssp585_far = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave,d=6,k=@ave]
+
+let npy = 2
+let npx = 3  ! Nombre de colonnes ajusté à 3
+
+! Ajustez la taille des panneaux et les espaces pour la clarté
+go multi_view npy, npx, 0.28, 0.05, 0.05, 0.1, 0.4, 0.05  ! Ajuster Xsize et Xgap
+
+set VIEW V11
+PPL AXLABP -1 -1
+fill/pal=orange_purple/nolabel ssp126_near;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 ssp127
+label 28 6 -1 90 0.12 
+
+set VIEW V12
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel ssp245_near;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 SSP245
+
+set VIEW V13
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel ssp585_near;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 SSP585
+
+set VIEW V21
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel ssp126_far;go land 7 "" 1
+
+set VIEW V22
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel ssp245_far;go land 7 "" 1
+
+set VIEW V23
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel ssp585_far;go land 7 "" 1
+
+

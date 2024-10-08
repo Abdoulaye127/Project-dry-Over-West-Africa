@@ -1,0 +1,3297 @@
+  SET MEMORY/SIZE = 800
+  can data /all
+  can win /all
+  set win/new
+  can var/all
+
+ SET WINDOW/ASPECT = 0.7/size=2
+
+ 
+
+  let Fig            = $1%1%
+  let SubFig       = $2%1%
+
+ 
+
+!  	Define the longitude and latitude of each selected city and assign a three digit code
+!=================================================================================
+
+!====                  Name             Lon 	              Lat                     Code
+  let cName1 = "COTE D''IVOIRE";   let cLon1 = -8.5;    let cLat1 = 7;        let cCode1 = "CI"
+  let cName2 = "GHANA";            let cLon2 =  -3;     let cLat2 = 6.5;      let cCode2 = "GH"
+  let cName3 = "NIGERIA";          let cLon3 =  7;      let cLat3 = 9;        let cCode3 = "NG"
+  let cName4 = "BENIN";            let cLon4 =  0.8;    let cLat4 = 10.3;     let cCode4 = "BN" 
+  let cName5 = "LIBERIA";          let cLon5 = -11;     let cLat5 = 7.5;      let cCode5 = "LB"
+  let cName6 = "TOGO";             let cLon6 =  1.3;    let cLat6 = 7.7;      let cCode6 = "TG"
+  let cName7 = "SIERRA LEONE";     let cLon7 =  -17.5;  let cLat7 = 8.3;      let cCode7 = "SL"
+  let cName8 = "BURKINA FASO";     let cLon8 =  -4.5;   let cLat8 = 12.3;     let cCode8 = "BF"
+  let cName9 = "The GAMBIA";       let cLon9 =  -19.5;  let cLat9 = 13.2;     let cCode9 = "GM"
+  let cName10 = "GUINEA";          let cLon10 = -12;    let cLat10 = 10.5;    let cCode10 = "GN"
+  let cName11 = "NIGER";           let cLon11 =  8;     let cLat11 = 17;      let cCode11 = "NE"
+  let cName12 = "MALI";            let cLon12 = -4.00;  let cLat12 = 17;      let cCode12 = "ML"
+  let cName13 = "SENEGAL";         let cLon13 = -16.5;  let cLat13 = 14.70;   let cCode13 = "SN"
+  let cName14 = "GUINEA-BISSAU";   let cLon14 = -20.3;  let cLat14 = 11.8;    let cCode14 = "GB"
+  
+  
+  
+use Benin.nc              !d=1
+use Burkina_Faso.nc       !d=2
+use Cote_d_Ivoire.nc      !d=3
+use Gambia.nc             !d=4
+use Ghana.nc              !d=5
+use Guinea-Bissau.nc      !d=6
+use Guinea.nc             !d=7
+use Mali.nc               !d=8
+use Nigeria.nc            !d=9
+use Niger.nc              !d=10
+use Liberia.nc            !d=11
+use Senegal.nc            !d=12
+use Sierra_Leone.nc       !d=13
+use Togo.nc               !d=14
+ 
+use mask_WA.nc  !d=15
+let grid=mask[d=15]
+
+
+let Country1=if mask[d=1,GX=grid,GY=grid] gt 0 then mask[d=1,GX=grid,GY=grid]; let Zone1="Benin"         ;let col1="red"
+let Country2=if mask[d=2,GX=grid,GY=grid] gt 0 then mask[d=2,GX=grid,GY=grid]; let Zone2="Burkina Faso"  ;let col2="yellow"
+let Country3=if mask[d=3,GX=grid,GY=grid] gt 0 then mask[d=3,GX=grid,GY=grid]; let Zone3="Cote D''Ivoire"  ;let col3="green"
+let Country4=if mask[d=4,GX=grid,GY=grid] gt 0 then mask[d=4,GX=grid,GY=grid]; let Zone4="The Gambia"     ;let col4="black"
+let Country5=if mask[d=5,GX=grid,GY=grid] gt 0 then mask[d=5,GX=grid,GY=grid]; let Zone5="Ghana"         ;let col5="brown"
+let Country6=if mask[d=6,GX=grid,GY=grid] gt 0 then mask[d=6,GX=grid,GY=grid]; let Zone6="Guinea-Bissau" ;let col6="pink"
+let Country7=if mask[d=7,GX=grid,GY=grid] gt 0 then mask[d=7,GX=grid,GY=grid]; let Zone7="Guinea"        ;let col7="orange"
+let Country8=if mask[d=8,GX=grid,GY=grid] gt 0 then mask[d=8,GX=grid,GY=grid]; let Zone8="Mali"          ;let col8="purple"
+let Country9=if mask[d=9,GX=grid,GY=grid] gt 0 then mask[d=9,GX=grid,GY=grid]; let Zone9="Nigeria"       ;let col9="red"
+let Country10=if mask[d=10,GX=grid,GY=grid] gt 0 then mask[d=10,GX=grid,GY=grid]; let Zone10="Niger"     ;let col10="blue"
+let Country11=if mask[d=11,GX=grid,GY=grid] gt 0 then mask[d=11,GX=grid,GY=grid]; let Zone11="Liberia"   ;let col11="yellow"
+let Country12=if mask[d=12,GX=grid,GY=grid] gt 0 then mask[d=12,GX=grid,GY=grid]; let Zone12="Senegal"      ;let col12="brown"
+let Country13=if mask[d=13,GX=grid,GY=grid] gt 0 then mask[d=13,GX=grid,GY=grid]; let Zone13="Sierra-Leone" ;let col13="orange"
+let Country14=if mask[d=14,GX=grid,GY=grid] gt 0 then mask[d=14,GX=grid,GY=grid]; let Zone14="Togo" ;let col14="pink"
+
+let shape1="circle"
+let shape2="circle"
+let shape3="circle"
+let shape4="circle"
+let shape5="circle"
+let shape6="circle"
+let shape7="circle"
+let shape8="circle"
+let shape9="triangle"
+let shape10="triangle"
+let shape11="triangle"
+let shape12="triangle"
+let shape13="triangle"
+let shape14="triangle"
+let Ncity = 14
+
+!==========================================================================================
+! climatic zones
+!===========================================================================================
+let lonw1=-18; let lone1=18; let lats1=4;  let latn1=16;  let region1="West Africa"
+let lonw2=-18; let lone2=18; let lats2=4;  let latn2=8;   let region2="Guinea"
+let lonw3=-18; let lone3=18; let lats3=8;  let latn3=12;  let region3="Savannah"
+let lonw4=-18; let lone4=18; let lats4=12; let latn4=16;  let region4="Sahel"
+ 
+!==========================================================================================
+! climatic zones
+!===========================================================================================
+
+!==========================================================================================================================
+  If `Fig eq 1` then  !Study area
+!==========================================================================================================================
+   let rlonD_start =   -20
+   let rlonD_stop  =    20
+   let rlatD_start =    0
+   let rlatD_stop  =    25.2
+
+   use GTOPO30_10MIN.CDF
+
+let   npy = 1
+let   npx = 1
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.7,   0.06,   0.02,     0.7,    0.2,   0.02     
+  SET WINDOW/ASPECT = 0.7/size=2
+set VIEW V11
+   
+   fill /pal=terrestrial /lev ="(0.0)(50) (100) (200,2000,200) (3000)" /nolabel/xlimit=`rlonD_start`:`rlonD_stop`:2 \
+       /ylim = `rlatD_start`:`rlatD_stop`:2 HT;go land 7 "" 7
+
+
+label `CLon1`,`CLat1` -1, 0,0.10 @p7@AS `cName1`
+label `CLon2`,`CLat2` -1, 0,0.10 @p7@AS `cName2`
+label `CLon3`,`CLat3` -1, 0,0.10 @p7@AS `cName3`
+label `CLon4`,`CLat4` -1, 0,0.10 @p7@AS `cName4`
+label `CLon5`,`CLat5` -1, 310,0.10 @p7@AS `cName5`
+label `CLon6`,`CLat6` -1, 90,0.10 @p7@AS `cName6`
+label `CLon7`,`CLat7` -1, 0,0.10 @p7@AS `cName7`
+label `CLon8`,`CLat8` -1, 0,0.10 @p7@AS `cName8`
+label `CLon9`,`CLat9` -1, 0,0.10 @p7@AS `cName9`
+label `CLon10`,`CLat10` -1, 0,0.10 @p7@AS `cName10`
+label `CLon11`,`CLat11` -1, 0,0.10 @p7@AS `cName11`
+label `CLon12`,`CLat12` -1, 0,0.10 @p7@AS `cName12`
+label `CLon13`,`CLat13` -1, 0,0.10 @p7@AS `cName13`
+label `CLon14`,`CLat14` -1, 0,0.10 @p7@AS `cName14`
+
+
+! Draw the zones 
+poly/ov/nolab/line=2 {-18,18,18,-18,-18}, {4,4,8,8,4}
+poly/ov/nolab/line=2 {-18,18,18,-18,-18}, {8,8,12,12,8}
+poly/ov/nolab/line=2 {-18,18,18,-18,-18}, {12,12,16,16,12}
+label 26.5 12 -1 90 .14 @AS elevation(m)
+
+!Labels
+label 10 4.3  -1 0 0.2 @P8 Guinean
+label 10 8.2  -1 0 0.2 @P8 Savannah
+label 13 14.5 -1 0 0.2 @P8 Sahel
+
+!=================================================================================
+  ELIf `Fig eq 2` then   ! Model evalution; RSDS, RH, TAS and VWS
+!================================================================================== 
+
+use Waf_annual_PV_CombinedData.nc  !d=16
+use SARAH_RSDS_annual_1985_2014.nc !d=17
+use cru_ts4.01.1985.2014_WA_annual.nc ! d=18
+use era_sfcWind_1985_2014_WA_annual.nc !d=19
+use hurs_era_WA_1985_2014_annual.nc !d=20
+let topo=mask[d=15]
+
+!==========RSDS===========================================
+let model_annual_raw_RSDS= rsds00[d=16,l=@ave,GX=topo,GY=topo]
+let sarah=rsds[GT=model_annual_raw_RSDS@asn,GX=topo,GY=topo,l=@ave,d=17]
+
+let model_annual_RSDS=model_annual_raw_RSDS*topo
+let obs=sarah*topo 
+let annual_RSDS=model_annualRSDS[k=1:14@ave]-obs
+
+!==========TAS===========================================
+let model_annual_raw_TAS= tas00[d=16,l=@ave,GX=topo,GY=topo]
+let cru=TMP[GT=model_annual_raw_TAS@asn,GX=topo,GY=topo,l=@ave,d=18]
+let model_annual_TAS=model_annual_raw_TAS*topo
+let obs2=cru*topo
+
+!==========WIND===========================================
+let model_annual_raw_VWS= VWS00[d=16,l=@ave,GX=topo,GY=topo]
+let model_annual_VWS=model_annual_raw_VWS*topo
+let era_VWS=sfcwind[GT=model_annual_raw_TAS@asn,GX=topo,GY=topo,l=@ave,d=19]
+let obs3=era_VWS*topo
+
+!==========RH===========================================
+let model_annual_raw_RH= RH00[d=16,l=@ave,GX=topo,GY=topo]
+let model_annual_RH=model_annual_raw_RH*topo
+let era_RH=hurs[GT=model_annual_raw_TAS@asn,GX=topo,GY=topo,l=@ave,d=20]
+let obs4=era_RH*topo
+
+
+let   npy = 4
+let   npx = 2
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.19,   0.06,   0.02,     0.19,    0.12,   0.03     
+  SET WINDOW/ASPECT = 0.7/size=2
+
+
+let rlonD_start =  -20
+let rlonD_stop  =   20
+let rlatD_start =   0
+let rlatD_stop  =    25.2
+!  PPL AXLSZE 0.16,0.16
+
+!==============Plotting ====================================================
+SET VIEW V11
+PPL AXLSZE 0.12,0.12
+PPL AXLABP 0,-1
+fill/nolab/pal=blue_darkred/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(150,300,15)(inf) obs; go land 1 "" 1
+
+label -20 2 -1 0 0.18 @AS  (a)
+label -10 26.8 -1 0  0.20 @P7 Observation
+label/nouser -0.8 0.8  -1 90  0.15 @P7 RSDS
+
+SET VIEW V12
+
+
+PPL AXLABP 0,0
+fill/nolab/pal=blue_darkred//xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(150,300,15)(inf) model_annual_RSDS[k=1:14@ave]; go land 1 
+
+go regressxy
+  let p = obs
+  let q = model_annual_RSDS[k=1:14@ave]
+!compute significant value 
+let ndata=30
+let xvalue=-10
+let yvalue=1
+let font=0.15
+go DoSignificanceTest_corr.jnl
+
+label -7 26.8 -1 0  0.20 @P7 Rmean 
+
+!go polymark poly/pal=white/over/nokey/nolab -17.0 19  10 rectangle 1.5; 
+label -20 2 -1 0 0.18 @AS (b)
+label 20 26 -1 0 0.14 @P1  W/m^2
+
+
+let bias = model_annual_RSDS[k=1:14@ave]-obs
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-20,20,5) del(0)" bias[x=@sbx:7,y=@sbx:7]
+
+
+SET VIEW V21
+
+PPL AXLABP 0,-1
+fill/nolab/nokey/pal=blue_darkred/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(16,30,1.5)(inf) obs2; go land 1 "" 1
+!label -5 26.8 -1 0  0.20 @P1 CRU
+label -20 2 -1 0 0.18 @AS (c)
+
+label/nouser -0.8 0.8  -1 90  0.15 @P7 TAS
+
+SET VIEW V22
+
+PPL AXLABP 0,0
+fill/nolab/pal=blue_darkred/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(16,30,1.5)(inf) model_annual_TAS[k=1:14@ave]; go land 1 
+
+go regressxy
+  let p = obs2
+  let q = model_annual_TAS[k=1:14@ave]
+	
+go DoSignificanceTest_corr.jnl
+
+let bias2 = model_annual_TAS[k=1:14@ave]-obs2
+contour/over/nolab/SIZE=0.10/SPACING=1/col=1/LEVELS="(-5,2,1) del(0)" bias2[x=@sbx:7,y=@sbx:7]
+!label -7 26.8 -1 0  0.20 @P7 Rmean 
+label -20 2 -1 0 0.18 @AS (d)
+label 20 26 -1 0 0.14 @P1 ^oC
+
+
+SET VIEW V31
+PPL AXLABP 0,-1
+fill/nolab/nokey/pal=default/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(0.4,5,0.8)(inf) obs3; go land 1 "" 1
+label -20 2 -1 0 0.18 @AS (e)
+label/nouser -0.8 0.8  -1 90  0.15 @P7 VWS
+
+set VIEW V32
+PPL AXLABP 0,0
+fill/nolab/pal=default/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(0.4,5,0.8)(inf) model_annual_VWS[k=1:14@ave]; go land 1 
+
+go regressxy
+  let p = obs3
+  let q = model_annual_VWS[k=1:14@ave]
+	
+go DoSignificanceTest_corr.jnl
+
+let bias3 = model_annual_VWS[k=1:14@ave]-obs3
+contour/over/nolab/SIZE=0.10/SPACING=1/col=1/LEVELS="(-2,2,.5) del(0)" bias3[x=@sbx:7,y=@sbx:7]
+ 
+!label -7 26.8 -1 0  0.20 @P1 Rmean VWS
+label -20 2 -1 0 0.18 @AS (f)
+label 20 26 -1 0 0.14 @P1 @P1 m/s
+
+
+
+SET VIEW V41
+PPL AXLABP -1,-1
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(18,80,8)(inf) obs4; go land 1 "" 1
+
+label/nouser -0.8 0.8  -1 90  0.15 @P7 RH
+label -20 2 -1 0 0.18 @AS (g)
+
+SET VIEW V42
+PPL AXLABP -1,0
+fill/nolab/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(18,80,8)(inf) model_annual_RH[k=1:14@ave]; go land 1
+
+ go regressxy
+  let p = obs4
+  let q = model_annual_RH[k=1:14@ave]
+
+go DoSignificanceTest_corr.jnl
+
+let bias4 = model_annual_RH[k=1:14@ave]-obs4
+contour/over/nolab/SIZE=0.10/SPACING=1/col=1/LEVELS="(-20,10,5) del(0)" bias4[x=@sbx:7,y=@sbx:7]
+!label -7 26.8 -1 0  0.20 @P1 Rmean RH
+!label -21 23.5 -1 0 0.15 @P1 (f)
+label 20 26 -1 0 0.14 @AS %
+label -20 2 -1 0 0.18 @AS (h)
+
+
+!================================================================================================
+ELIf `Fig eq 3` then   ! Monthly climatology for each zones
+!================================================================================================
+use Waf_monthly_PV_CombinedData.nc !d=16
+use SARAH_RSDS_monthly_1985_2014.nc !d=17
+use cru_ts4.01.1985.2014_WA_monthly.nc !d=18
+use era_sfcWind_1985_2014_WA_monthly.nc !d=19
+use hurs_era_WA_1985_2014_monthly.nc !d=20
+
+let topo=mask[d=15]
+!===================== RSDS===============================
+DEFINE AXIS/T=0:11:1/T0="1-JAN"/UNITS=days sawa
+let model_month_raw= RSDS00[d=16,GX=topo,GY=topo,GT=sawa@asn]
+let cru_month=rsds[d=17,GX=topo,GY=topo,GT=sawa@asn]
+let obs_month=cru_month*topo
+
+let Rmean_max_RCM=model_month_raw[k=1:14@max]
+let Rmean_min_RCM=model_month_raw[k=1:14@min]
+let model_month=model_month_raw[k=1:14@ave]
+
+let Rmean_max=Rmean_max_RCM*topo
+let Rmean_min=Rmean_min_RCM*topo
+
+let   npy = 4
+let   npx = 3
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.15,   0.06,   0.02,     0.15,    0.3,   0.02     
+  SET WINDOW/ASPECT = 0.7/size=2
+
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V1`comp`; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=model_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let obs=obs_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let max=Rmean_max[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let min=Rmean_min[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	PPL AXLABP 0,0 ; \ 
+	let xpts = {4.4,5.4}; \
+	let ypts = {320,320}; \
+	if `comp eq 1` then PPL AXLABP 0,-1 ; \
+	plot/VLIMITS=30:350:30/nolab/thickness=2/col=red model ; \
+	go plot_swath poly/over/nolab/nolab/pal=gray_light max min ; \
+	plot/over/VLIMITS=30:350:30/nolab/thickness=2/col=red model ; \
+	plot/over/VLIMITS=30:350:30/nolab/thickness=2/col=black obs ; \
+	if `comp eq 1` then ;\
+	plot/vs/over/line=8/thick/nolab xpts,ypts; \
+	let ypts = {300,300}; \
+	plot/vs/over/line=7/thick/nolab xpts,ypts; \
+	plot/vs/over/nolab/line=1 {4.15,9.8,9.8,4.15,4.15}, {260,260,335,335,260};\
+	go polymark poly/pal=gray_light/over/nokey/nolab  5.0 280 10 square 1;\
+	label/nouse 1.7 1.75 -1 0 0.11 @P1 RCMs spread;\
+	label/nouser 1.7  2.08 -1 0   0.11 @P1 Rmean ;\
+      label/nouser 1.7  1.92  -1 0   0.11 @P1 Observation ;\
+	endif;\
+	go variance ; \
+	let p=obs ; \
+	let q=model ; \
+	let ndata=12 ; \
+	let xvalue=1 ; \
+	let yvalue=50 ; \
+	let font=0.12 ; \
+	go DoSignificanceTest_corr2.jnl)
+
+label/nouser -8.2  0.4 -1 90  0.14 @P7 RSDS (W/m^2)
+label/nouser -6.5 2.5  -1 0  0.20 @P7 Guinea 
+label/nouser -3.0 2.5  -1 0  0.20 @P7 Savannah
+label/nouser  1.0 2.5  -1 0  0.20 @P7 Sahel
+label/nouser 0  2.0  -1 0   0.16 @P1 (c)
+label/nouser -3.7  2.0  -1 0   0.16 @P1 (b)
+label/nouser -7.5 2.0  -1 0   0.16 @P1 (a)
+!===================== TAS===============================
+
+let model_month_raw=tas00[d=16,GX=topo,GY=topo,GT=sawa@asn]
+
+let cru_month=tmp[d=18,GX=topo,GY=topo,GT=sawa@asn]
+let obs_month=cru_month*topo
+
+let Rmean_max_RCM=model_month_raw[k=1:14@max]
+let Rmean_min_RCM=model_month_raw[k=1:14@min]
+let model_month=model_month_raw[k=1:14@ave]
+
+let Rmean_max=Rmean_max_RCM*topo
+let Rmean_min=Rmean_min_RCM*topo
+
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V2`comp`; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=model_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let obs=obs_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let max=Rmean_max[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let min=Rmean_min[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	PPL AXLABP 0,0 ; \ 
+	if `comp eq 1` then PPL AXLABP 0,-1 ; \
+	plot/VLIMITS=15:35:2.5/nolab/thickness=2/col=red model ; \
+	go plot_swath poly/over/nolab/nolab/pal=gray_light max min ; \
+	plot/over/VLIMITS=15:35:2.5/nolab/thickness=2/col=red model ; \
+	plot/over/VLIMITS=15:35:2.5/nolab/thickness=2/col=black obs ; \
+	go variance ; \
+	let p=obs ; \
+	let q=model ; \
+	let ndata=12 ; \
+	let xvalue=1 ; \
+	let yvalue=16 ; \
+	let font=0.12 ; \
+	go DoSignificanceTest_corr2.jnl)
+
+label/nouser -7.8  0.4 -1 90  0.14 @P7 TAS (^oC)
+label/nouser 0.02  1.9  -1 0   0.16 @P1 (f)
+label/nouser -3.6  1.9  -1 0   0.16 @P1 (e)
+label/nouser -7.15  1.9  -1 0   0.16 @P1 (d)
+
+!===================== VWS===============================
+
+let model_month_raw=vws00[d=16,GX=topo,GY=topo,GT=sawa@asn]
+
+let Rmean_max_RCM=model_month_raw[k=1:14@max]
+let Rmean_min_RCM=model_month_raw[k=1:14@min]
+let model_month=model_month_raw[k=1:14@ave]
+
+let Rmean_max=Rmean_max_RCM*topo
+let Rmean_min=Rmean_min_RCM*topo
+let era_wws_month=sfcwind[d=19,GX=topo,GY=topo,GT=sawa@asn]
+let obs_month=era_wws_month*topo
+
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V3`comp`; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=model_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let obs=obs_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let max=Rmean_max[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let min=Rmean_min[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	PPL AXLABP 0,0 ; \ 
+	if `comp eq 1` then PPL AXLABP 0,-1 ; \
+	plot/VLIMITS=0.5:6:1/nolab/thickness=2/col=red model ; \
+	go plot_swath poly/over/nolab/nolab/pal=gray_light max min ; \
+	plot/over/VLIMITS=0.5:6:1/nolab/thickness=2/col=red model ; \
+	plot/over/VLIMITS=0.5:6:1/nolab/thickness=2/col=black obs ; \
+	go variance ; \
+	let p=obs ; \
+	let q=model ; \
+	let ndata=12 ; \
+	let xvalue=1 ; \
+	let yvalue=0.8; \
+	let font=0.12 ; \
+	go DoSignificanceTest_corr2.jnl)
+
+label/nouser -7.8  0.4  -1 90  0.14 @P7 VWS (m/s)
+label/nouser  0.02  1.9  -1 0   0.16 @P1 (i)
+label/nouser -3.6  1.9  -1 0   0.16 @P1 (h)
+label/nouser -7.15  1.9  -1 0   0.16 @P1 (g)
+
+!===================== RH===============================
+
+let model_month_raw=rh00[d=16,GX=topo,GY=topo,GT=sawa@asn]
+
+let Rmean_max_RCM=model_month_raw[k=1:14@max]
+let Rmean_min_RCM=model_month_raw[k=1:14@min]
+let model_month=model_month_raw[k=1:14@ave]
+
+let Rmean_max=Rmean_max_RCM*topo
+let Rmean_min=Rmean_min_RCM*topo
+
+let era_rh_month=hurs[d=20,GX=topo,GY=topo,GT=sawa@asn]
+let obs_month=era_rh_month*topo
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V4`comp`; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=model_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let obs=obs_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let max=Rmean_max[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let min=Rmean_min[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	PPL AXLABP 0,0 ; \ 
+	if `comp eq 1` then PPL AXLABP 0,-1 ; \
+	plot/VLIMITS=8:100:10/nolab/thickness=2/col=red model ; \
+	go plot_swath poly/over/nolab/nolab/pal=gray_light max min ; \
+	plot/over/VLIMITS=8:100:10/nolab/thickness=2/col=red model ; \
+	plot/over/VLIMITS=8:100:10/nolab/thickness=2/col=black obs ; \
+	go variance ; \
+	let p=obs ; \
+	let q=model ; \
+	let ndata=12 ; \
+	let xvalue=80.7 ; \
+	let yvalue=11; \
+	let font=0.15 ; \
+	label -13  -2 -1 0 0.12 @P1 J ; \
+	label 14   -2 -1 0 0.12 @P1 F; \
+	label 36   -2 -1 0 0.12 @P1 M; \
+	label 62   -2 -1 0 0.12 @P1 A; \
+	label 84   -2 -1 0 0.12 @P1 M; \
+	label 108  -2 -1 0 0.12 @P1 J; \
+	label 132  -2 -1 0 0.12 @P1 J; \
+	label 157  -2 -1 0 0.12 @P1 A; \
+	label 182  -2 -1 0 0.12 @P1 S; \
+	label 204  -2 -1 0 0.12 @P1 O; \
+	label 230  -2 -1 0 0.12 @P1 N; \
+	label 253  -2 -1 0 0.12 @P1 D; \
+	go DoSignificanceTest_corr2.jnl)
+
+label/nouser -7.8  0.4 -1 90  0.14 @P7 RH @AS(%)
+label/nouser  0.02  1.9  -1 0   0.16 @P1 (l)
+label/nouser -3.6  1.9  -1 0   0.16 @P1 (k)
+label/nouser -7.15  1.9  -1 0   0.16 @P1 (j)
+
+!=================================================================================
+  ELIf `Fig eq 5` then   ! Monthly RSDS
+!================================================================================== 
+
+use Waf_annual_PV_CombinedData.nc  !d=16
+use Waf_monthly_PV_CombinedData.nc  !d=17
+
+let topo=mask[d=15]
+let model_annual_raw= PV00[d=16,GX=topo,GY=topo]
+
+let model_annual=model_annual_raw[l=@ave]*topo
+
+
+let model_month_raw= PV00[d=17,GX=topo,GY=topo]
+
+let model_month=model_month_raw[l=@ave]*topo
+
+let Rmean_max_RCM=model_month_raw[k=1:14@max]*100
+let Rmean_min_RCM=model_month_raw[k=1:14@min]*100
+let model_month=model_month_raw[k=1:14@ave]*100
+
+let Rmean_max=Rmean_max_RCM*topo
+let Rmean_min=Rmean_min_RCM*topo
+
+
+let   npy = 3
+let   npx = 3
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.21,   0.08,   0.065,     0.21,    0.22,   0.05     
+  SET WINDOW/ASPECT = 0.7/size=2
+
+
+let rlonD_start =  -20
+let rlonD_stop  =   20
+let rlatD_start =   0
+let rlatD_stop  =    25.2
+!  PPL AXLSZE 0.16,0.16
+
+!==============Plotting ====================================================
+SET VIEW V11
+PPL AXLSZE 0.12,0.12
+PPL AXLABP -1,-1
+fill/nolab/pal=blue_darkred/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(15,28,1.5)(inf) model_annual[k=1:14@ave]*100; go land 1 "" 1
+!label/nouser 1 3.8 -1 0  0.20 @P7@AS ERAINT & ERA20C
+
+
+!label/nouser -0.8  0.0  -1 90  0.20 @P7 10m wind speed
+!go polymark poly/pal=white/over/nokey/nolab -17.0 19  10 rectangle 1.5; 
+label -21 23.2 -1 0 0.15 @P1 (a)
+label/nouser 4.0  2.9  -1 0  0.10 @AS  (%)
+label -5 26.8 -1 0  0.20 @P1 Rmean
+
+
+SET VIEW V12 
+PPL AXLABP 0,0
+! Box plot
+let Pmax = 30
+let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0 }
+go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=1:9:9/vlimit=14:`Pmax`:2 TheFUT
+
+        let pbint2 =2.2
+        let ParLab =12
+        let icity = 0
+        let px = 1.3;
+ 
+        let pbint2 =2.2
+repeat /range = 1:4 (let icity = `icity + 1`; \
+        let region =  region`icity`; \
+        let clone = lone`icity`; let clonw = lonw`icity`; \
+        let clatn = latn`icity`; let clats = lats`icity`; \
+	  let Param = model_annual*100;\
+        let Par = Param[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave,k=1:14]; let ilab = 1; \
+	  let max`icity`=Param[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave,k=1:14@max];\
+	  let min`icity`=Param[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave,k=1:14@min];\
+        let mycol="gray";\
+	  go Plot_BoxplotA.jnl; \
+	  let px = `px + pbint2`; \
+         )
+
+let start=14
+let inc=4
+repeat /range = 1:5 (let icity = `icity + 1`; \
+       label 9.2 `start-0.2` -1 0 0.11 @SR `start`.0;\
+	  let start=`start+inc`)
+
+label/nouser 4.8  1.2  -1 90  0.12 @AS (%)	
+
+label 1 28.5 -1 0 0.15 @P1 (b)
+
+
+SET VIEW V21
+let   nrow = 1
+      let   ncol = 3
+!     ! go multi_view [rows], [columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix]
+       go multi_view `nrow`,  `ncol`,   0.147,    0.08,   0.02,   0.147,    0.52,   0.038  AA
+	PPL AXLSZE  0.1,.10
+	set view AA11
+
+PPL TXLABP,0
+        
+let clone = lone2; let clonw = lonw2
+let clatn = latn2; let clats = lats2
+let model=model_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+let max=Rmean_max[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+let min=Rmean_min[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+
+PPL AXLABP 0,-1
+plot/VLIMITS=5:35:5/nolab/thickness=2/col=red model
+go plot_swath poly/over/nolab/nolab/pal=gray_light max min
+plot/over/VLIMITS=5:35:5/nolab/thickness=2/col=red model
+
+
+!label/nouser -0.7  0.6 -1 90  0.14 @P1 RSDS (W/m^2)
+!plot/vs/over/nolab/line=1 {5,10.5,10.5,5,5}, {220,220,290,290,220} ! thick blue box 
+
+!label 85  380  -1 0  0.20 @P7 Guinea 
+
+!label/nouser 0  2.75  -1 0   0.11 @P1 (a)
+label/nouser -0.65 1  -1 90  0.12 @AS (%)	
+!=============Legend for the month =================
+label 0.4  1 -1 0 0.12 @P1 J
+label 1.5  1 -1 0 0.12 @P1 F
+label 2.5  1 -1 0 0.12 @P1 M
+label 3.5  1 -1 0 0.12 @P1 A
+label 4.5  1 -1 0 0.12 @P1 M
+label 5.5  1 -1 0 0.12 @P1 J
+label 6.5  1 -1 0 0.12 @P1 J
+label 7.5  1 -1 0 0.12 @P1 A
+label 8.5  1 -1 0 0.12 @P1 S
+label 9.5  1 -1 0 0.12 @P1 O
+label 10.5 1 -1 0 0.12 @P1 N
+label 11.5 1 -1 0 0.12 @P1 D
+
+label 1 31.5 -1 0 0.15 @P1 (c)
+SET VIEW AA12
+PPL TXLABP,0
+        
+let clone = lone3; let clonw = lonw3
+let clatn = latn3; let clats = lats3
+let model=model_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+let max=Rmean_max[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+let min=Rmean_min[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+
+PPL AXLABP 0,0
+plot/VLIMITS=5:35:5/nolab/thickness=2/col=red model
+go plot_swath poly/over/nolab/nolab/pal=gray_light max min
+plot/over/VLIMITS=5:35:5/nolab/thickness=2/col=red model
+
+!label 85  380  -1 0  0.20 @P7 Savannah
+!label/nouser 0  2.75  -1 0   0.11 @P1 (b)
+!=============Legend for the month =================
+label 0.4  1 -1 0 0.12 @P1 J
+label 1.5  1 -1 0 0.12 @P1 F
+label 2.5  1 -1 0 0.12 @P1 M
+label 3.5  1 -1 0 0.12 @P1 A
+label 4.5  1 -1 0 0.12 @P1 M
+label 5.5  1 -1 0 0.12 @P1 J
+label 6.5  1 -1 0 0.12 @P1 J
+label 7.5  1 -1 0 0.12 @P1 A
+label 8.5  1 -1 0 0.12 @P1 S
+label 9.5  1 -1 0 0.12 @P1 O
+label 10.5 1 -1 0 0.12 @P1 N
+label 11.5 1 -1 0 0.12 @P1 D
+
+label 1 31.5 -1 0 0.15 @P1 (d)
+SET VIEW AA13
+PPL TXLABP,0
+        
+let clone = lone4; let clonw = lonw4
+let clatn = latn4; let clats = lats4
+let model=model_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+let obs=obs_month[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+let max=Rmean_max[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+let min=Rmean_min[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]
+
+PPL AXLABP 0,0
+plot/VLIMITS=5:35:5/nolab/thickness=2/col=red model
+go plot_swath poly/over/nolab/nolab/pal=gray_light max min
+plot/over/VLIMITS=5:35:5/nolab/thickness=2/col=red model
+
+!label 85  380  -1 0  0.20 @P7 Sahel
+
+!=============Legend for the month =================
+label 0.4  1 -1 0 0.12 @P1 J
+label 1.5  1 -1 0 0.12 @P1 F
+label 2.5  1 -1 0 0.12 @P1 M
+label 3.5  1 -1 0 0.12 @P1 A
+label 4.5  1 -1 0 0.12 @P1 M
+label 5.5  1 -1 0 0.12 @P1 J
+label 6.5  1 -1 0 0.12 @P1 J
+label 7.5  1 -1 0 0.12 @P1 A
+label 8.5  1 -1 0 0.12 @P1 S
+label 9.5  1 -1 0 0.12 @P1 O
+label 10.5 1 -1 0 0.12 @P1 N
+label 11.5 1 -1 0 0.12 @P1 D
+
+label 1 31.5 -1 0 0.15 @P1 (e)
+
+SET VIEW V31
+
+let   nrow = 2
+      let   ncol = 1
+!     ! go multi_view [rows], [columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix]
+       go multi_view `nrow`,  `ncol`,   0.48,    0.08,   0.02,   0.15,    0.125,   0.038  BB
+	PPL AXLSZE  0.1,.10
+	set view BB11
+
+        PPL AXLABP 0,-1
+        let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0 }
+        go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=1.5:14:0.9/vlimit=5:30:2.5 TheFUT
+        let ParLab = 2
+        let icity = 0
+        let px = 1.7;
+        let pbint1 = 0.6
+        let pbint2 =0.9
+
+	  let icity=0
+        repeat /range = 1:14 (let icity = `icity + 1`; \
+        let zone =  Zone`icity`; \
+        let Parm     = model_annual[k=1:14]*Country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]*100; let ilab = 1; \
+	  let maxcount`icity`=model_annual[k=1:14@max]*Country`icity`*100;\
+	  let mincount`icity`=model_annual[k=1:14@min]*Country`icity`*100;\
+        let mycol="gray";\
+	  go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint2`; \
+         )
+
+
+label/nouser -0.65 0.5  -1 90  0.12 @AS (%)	
+label 1.5 26 -1 0 0.15 @P1 (f)
+
+!=================================================================================
+  ELIf `Fig eq 6` then   !  projected change RCP 8.5 RSDS; VWS; TAS and RH
+!================================================================================== 
+
+use Waf_annual_PV_CombinedData.nc  !d=16
+
+let topo=mask[d=15]
+
+!========== Change in RSDS=========================
+let historical_RSDS=RSDS00[d=16,k=@ave,GX=topo,GY=topo]
+
+let model_15deg_RSDS=RSDS15[d=16,k=@ave,GX=topo,GY=topo] 
+let model_20deg_RSDS=RSDS20[d=16,k=@ave,GX=topo,GY=topo]
+let model_25deg_RSDS=RSDS25[d=16,k=@ave,GX=topo,GY=topo] 
+let model_30deg_RSDS=RSDS30[d=16,k=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_RSDS=model_15deg_RSDS-historical_RSDS
+let rcp85_20deg_RSDS=model_20deg_RSDS-historical_RSDS
+let rcp85_25deg_RSDS=model_25deg_RSDS-historical_RSDS
+let rcp85_30deg_RSDS=model_30deg_RSDS-historical_RSDS
+
+let RSDS_15deg=rcp85_15deg_RSDS[l=@ave]*topo
+let RSDS_20deg=rcp85_20deg_RSDS[l=@ave]*topo
+let RSDS_25deg=rcp85_25deg_RSDS[l=@ave]*topo
+let RSDS_30deg=rcp85_30deg_RSDS[l=@ave]*topo
+
+!========== Change in TAS=========================
+let historical_tas=tas00[d=16,GX=topo,GY=topo,k=@ave,l=@ave]
+let model_15deg_tas=tas15[d=16,GX=topo,GY=topo,k=@ave,l=@ave] 
+let model_20deg_tas=tas20[d=16,GX=topo,GY=topo,k=@ave,l=@ave]
+let model_25deg_tas=tas25[d=16,GX=topo,GY=topo,k=@ave,l=@ave] 
+let model_30deg_tas=tas30[d=16,GX=topo,GY=topo,k=@ave,l=@ave] 
+
+let rcp85_15deg_tas=model_15deg_tas-historical_tas
+let rcp85_20deg_tas=model_20deg_tas-historical_tas
+let rcp85_25deg_tas=model_25deg_tas-historical_tas
+let rcp85_30deg_tas=model_30deg_tas-historical_tas
+
+let tas_15deg=rcp85_15deg_tas*topo
+let tas_20deg=rcp85_20deg_tas*topo
+let tas_25deg=rcp85_25deg_tas*topo
+let tas_30deg=rcp85_30deg_tas*topo
+
+!========== Change in VWS=========================
+let historical_VWS=VWS00[d=16,k=@ave,GX=topo,GY=topo]
+
+let model_15deg_VWS=VWS15[d=16,k=@ave,GX=topo,GY=topo] 
+let model_20deg_VWS=VWS20[d=16,k=@ave,GX=topo,GY=topo]
+let model_25deg_VWS=VWS25[d=16,k=@ave,GX=topo,GY=topo] 
+let model_30deg_VWS=VWS30[d=16,k=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_VWS=model_15deg_VWS-historical_VWS
+let rcp85_20deg_VWS=model_20deg_VWS-historical_VWS
+let rcp85_25deg_VWS=model_25deg_VWS-historical_VWS
+let rcp85_30deg_VWS=model_30deg_VWS-historical_VWS
+
+let VWS_15deg=rcp85_15deg_VWS[l=@ave]*topo
+let VWS_20deg=rcp85_20deg_VWS[l=@ave]*topo
+let VWS_25deg=rcp85_25deg_VWS[l=@ave]*topo
+let VWS_30deg=rcp85_30deg_VWS[l=@ave]*topo
+
+!========== Change in RH=========================
+let historical_RH=RH00[d=16,k=@ave,GX=topo,GY=topo]
+
+let model_15deg_RH=RH15[d=16,k=@ave,GX=topo,GY=topo] 
+let model_20deg_RH=RH20[d=16,k=@ave,GX=topo,GY=topo]
+let model_25deg_RH=RH25[d=16,k=@ave,GX=topo,GY=topo] 
+let model_30deg_RH=RH30[d=16,k=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_RH=model_15deg_RH-historical_RH
+let rcp85_20deg_RH=model_20deg_RH-historical_RH
+let rcp85_25deg_RH=model_25deg_RH-historical_RH
+let rcp85_30deg_RH=model_30deg_RH-historical_RH
+
+let RH_15deg=rcp85_15deg_RH[l=@ave]*topo
+let RH_20deg=rcp85_20deg_RH[l=@ave]*topo
+let RH_25deg=rcp85_25deg_RH[l=@ave]*topo
+let RH_30deg=rcp85_30deg_RH[l=@ave]*topo
+
+!========== Change in PV=========================
+let historical_PV=PV00[d=16,GX=topo,GY=topo]
+
+let model_15deg_PV=PV15[d=16,GX=topo,GY=topo] 
+let model_20deg_PV=PV20[d=16,GX=topo,GY=topo]
+let model_25deg_PV=PV25[d=16,GX=topo,GY=topo] 
+let model_30deg_PV=PV30[d=16,GX=topo,GY=topo] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo*100
+let PV_20deg=rcp85_20deg_PV*topo*100
+let PV_25deg=rcp85_25deg_PV*topo*100
+let PV_30deg=rcp85_30deg_PV*topo*100
+
+!========Key Parameters==================
+        !**** Set parameter for SHAKEY do_key, orient, klab_size, klab_inc, klab_dig, klab_len, kx_lo, kx_hi, ky_lo, ky_hi
+        let do_key=1       !    0 if the key will not be displayed, 1 if it will (0)
+        let orient=1       !    0 for horizontal, 1 for vertical (0)
+        let klab_size=0.10 !    if non-zero: height of key label characters in inches (0)
+        let klab_inc=0     !    if non-zero: every klab_ince key level is labelled (0)
+        let klab_dig=1     !    number of sig digits in the key (3)
+        let klab_len=8     !    max characters in a key label (9)
+        let kx_lo=4.65      !    X coord of left side of key in inches
+        let kx_hi=4.8     !    X coord of right side of key in inches
+        let ky_lo=1.4      !    Y coord of bottom of key in inches
+        let ky_hi=3.7      !    Y coord of top of key in inches
+       
+
+let   npy = 5
+let   npx = 4
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.15,   0.065,   0.02,     0.15,    0.08,   0.032     
+
+
+let rlonD_start =  -20
+let rlonD_stop  =   20
+let rlatD_start =   0
+let rlatD_stop  =   25.2
+
+PPL AXLSZE 0.12,0.12
+
+!==============Plotting ==================
+
+
+set VIEW V11
+PPL AXLABP 0,-1
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg[l=@ave,k=@ave] ; go land 7 "" 1
+
+label -20 2 -1 0 0.18 @AS (a) 
+
+let histoR=PV00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = PV_15deg[l=@ave,k=@ave]
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+label -5 28 -1 0 0.20 @P7 GWL1.5
+label -29 2 -1 90 0.16 @P7 PV potential
+
+SET VIEW V12
+PPL AXLABP 0,0
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg[l=@ave,k=@ave] ; go land 7 
+
+label -20 2 -1 0 0.18 @AS (b)
+label -5 28 -1 0 0.20 @P7 GWL2.0
+
+let histoR=PV00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = PV_20deg[l=@ave,k=@ave]
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+let bias = PV_20deg[l=@ave,k=@ave]-PV_15deg[l=@ave,k=@ave]
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-0.5,0.5,0.04) del(0)" bias[x=@sbx:7,y=@sbx:7]
+
+SET VIEW V13
+PPL AXLABP 0,0
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg[l=@ave,k=@ave] ; go land 7 
+
+label -20 2 -1 0 0.18 @AS (c)
+label -5 28 -1 0 0.20 @P7 GWL2.5
+
+let histoR=PV00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = PV_25deg[l=@ave,k=@ave]
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+let bias = PV_25deg[l=@ave,k=@ave]-PV_15deg[l=@ave,k=@ave]
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-0.4,0.4,0.04) del(0)" bias[x=@sbx:7,y=@sbx:7]
+PPL RESET
+
+SET VIEW V14
+PPL AXLABP 0,0
+
+fill/set_up/nolab/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg[l=@ave,k=@ave] 
+
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 
+let histoR=PV00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = PV_30deg[l=@ave,k=@ave]
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+label -5 28 -1 0 0.20 @P7 GWL3.0
+label 20 26 -1 0 0.14 @AS %
+
+let bias = PV_30deg[l=@ave,k=@ave]-PV_15deg[l=@ave,k=@ave]
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-0.4,0.4,0.04) del(0)" bias[x=@sbx:7,y=@sbx:7]
+label -20 2 -1 0 0.18 @AS (d)
+
+!========Key Parameters==================
+        !**** Set parameter for SHAKEY do_key, orient, klab_size, klab_inc, klab_dig, klab_len, kx_lo, kx_hi, ky_lo, ky_hi
+        let do_key=1       !    0 if the key will not be displayed, 1 if it will (0)
+        let orient=1       !    0 for horizontal, 1 for vertical (0)
+        let klab_size=0.10 !    if non-zero: height of key label characters in inches (0)
+        let klab_inc=0     !    if non-zero: every klab_ince key level is labelled (0)
+        let klab_dig=1     !    number of sig digits in the key (3)
+        let klab_len=8     !    max characters in a key label (9)
+        let kx_lo=4.5      !    X coord of left side of key in inches
+        let kx_hi=4.65     !    X coord of right side of key in inches
+        let ky_lo=1.4      !    Y coord of bottom of key in inches
+        let ky_hi=3.55      !    Y coord of top of key in inches
+
+
+set VIEW V21
+PPL AXLABP 0,-1
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-3,3,0.5)(inf) RSDS_15deg ; go land 7 "" 1
+
+let histoR=RSDS00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = RSDS_15deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+label -20 2 -1 0 0.18 @AS (e)
+
+label -29 7 -1 90 0.16 @P7 RSDS
+
+let obs=PV_15deg[l=@ave,k=@ave]
+let model1=RSDS_15deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+SET VIEW V22 
+
+PPL AXLABP 0,0
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-3,3,0.5)(inf) RSDS_20deg ; go land 7 
+
+let bias = RSDS_20deg-RSDS_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-4,4,0.5) del(0)" bias[x=@sbx:7,y=@sbx:7]
+
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = RSDS_20deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_20deg[l=@ave,k=@ave]
+let model1=RSDS_20deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+label -20 2 -1 0 0.18 @AS (f)
+
+
+
+set view v23
+
+PPL AXLABP 0,0
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-3,3,0.5)(inf) RSDS_25deg ; go land 7 
+
+let bias = RSDS_25deg-RSDS_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-4,4,0.5) del(0)" bias[x=@sbx:7,y=@sbx:7]
+
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = RSDS_25deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+let obs=PV_25deg[l=@ave,k=@ave]
+let model1=RSDS_25deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+label -20 2 -1 0 0.18 @AS (g)
+
+set view v24
+
+PPL AXLABP 0,0
+fill/set_up/nolab/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-3,3,0.5)(inf) RSDS_30deg 
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 
+let bias = RSDS_30deg-RSDS_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-4,4,0.5) del(0)" bias[x=@sbx:7,y=@sbx:7]
+
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = RSDS_30deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_30deg[l=@ave,k=@ave]
+let model1=RSDS_30deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+label -20 2 -1 0 0.18 @AS (h)
+label 20 26 -1 0 0.14 @P1 W/m^2
+
+PPL RESET
+
+set VIEW V31
+PPL AXLABP 0,-1
+
+fill/nolab/nokey/pal=inverse_redscale/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(0,4,0.4)(inf) tas_15deg ; go land 7 "" 1
+
+label -20 2 -1 0 0.18 @AS (i)
+label -29 7 -1 90 0.16 @P7 TAS
+
+let histoR=tas00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = tas_15deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_15deg[l=@ave,k=@ave]
+let model1=tas_15deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+SET VIEW V32 
+
+PPL AXLABP 0,0
+
+fill/nolab/nokey/pal=inverse_redscale/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(0,4,0.4)(inf) tas_20deg ; go land 7 
+
+let bias = tas_20deg-tas_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-4,4,0.2) del(0)" bias[x=@sbx:7,y=@sbx:7]
+label -20 2 -1 0 0.18 @AS (j)
+
+let histoR=tas00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = tas_20deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_20deg[l=@ave,k=@ave]
+let model1=tas_20deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+set view V33
+
+PPL AXLABP 0,0
+fill/nolab/nokey/pal=inverse_redscale/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(0,4,0.4)(inf) tas_25deg ; go land 7 
+
+let bias = tas_25deg-tas_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-4,4,0.2) del(0)" bias[x=@sbx:7,y=@sbx:7]
+label -20 2 -1 0 0.18 @AS (k)
+
+let histoR=tas00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = tas_25deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_25deg[l=@ave,k=@ave]
+let model1=tas_25deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+set view V34
+
+PPL AXLABP 0,0
+fill/set_up/nolab/pal=inverse_redscale/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(0,4,0.4)(inf) tas_30deg 
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 
+
+label -20 2 -1 0 0.18 @AS (l)
+label 20 26 -1 0 0.14 @P1 ^oC
+let bias = tas_30deg-tas_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-4,4,0.2) del(0)" bias[x=@sbx:7,y=@sbx:7] 
+let histoR=tas00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = tas_30deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+let obs=PV_30deg[l=@ave,k=@ave]
+let model1=tas_30deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+PPL RESET
+set VIEW V41
+PPL AXLABP 0,-1
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.2,0.2,0.04)(inf) VWS_15deg ; go land 7 "" 1
+
+label -20 2 -1 0 0.18 @AS (m)
+label -29 7 -1 90 0.16 @P7 VWS
+
+let histoR=VWS00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = VWS_15deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_15deg[l=@ave,k=@ave]
+let model1=VWS_15deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+SET VIEW V42 
+
+PPL AXLABP 0,0
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.2,0.2,0.04)(inf) VWS_20deg ; go land 7 
+
+let bias = VWS_20deg-VWS_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-0.2,0.2,0.02) del(0)" bias[x=@sbx:7,y=@sbx:7]
+label -20 2 -1 0 0.18 @AS (n)
+let histoR=VWS00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = VWS_20deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_20deg[l=@ave,k=@ave]
+let model1=VWS_20deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12 1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+set view v43
+
+PPL AXLABP 0,0
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.2,0.2,0.04)(inf) VWS_25deg ; go land 7 
+let bias = VWS_25deg-VWS_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-0.2,0.2,0.02) del(0)" bias[x=@sbx:7,y=@sbx:7]
+label -20 2 -1 0 0.18 @AS (o)
+let histoR=VWS00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = VWS_25deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_25deg[l=@ave,k=@ave]
+let model1=VWS_25deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+set view v44
+
+PPL AXLABP 0,0
+fill/set_up/nolab/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.2,0.2,0.04)(inf) VWS_30deg
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 
+let bias = VWS_30deg-VWS_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-0.2,0.2,0.02) del(0)" bias[x=@sbx:7,y=@sbx:7]
+label -20 2 -1 0 0.18 @AS (p)
+label 20 26 -1 0 0.14 @AS m/s
+let histoR=VWS00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = VWS_30deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+let obs=PV_30deg[l=@ave,k=@ave]
+let model1=VWS_30deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+PPL RESET
+set VIEW V51
+
+!========Key Parameters==================
+        !**** Set parameter for SHAKEY do_key, orient, klab_size, klab_inc, klab_dig, klab_len, kx_lo, kx_hi, ky_lo, ky_hi
+        let do_key=1       !    0 if the key will not be displayed, 1 if it will (0)
+        let orient=1       !    0 for horizontal, 1 for vertical (0)
+        let klab_size=0.10 !    if non-zero: height of key label characters in inches (0)
+        let klab_inc=0     !    if non-zero: every klab_ince key level is labelled (0)
+        let klab_dig=1     !    number of sig digits in the key (3)
+        let klab_len=8     !    max characters in a key label (9)
+        let kx_lo=4.55      !    X coord of left side of key in inches
+        let kx_hi=4.7    !    X coord of right side of key in inches
+        let ky_lo=1.2      !    Y coord of bottom of key in inches
+        let ky_hi=3.3      !    Y coord of top of key in inches
+PPL AXLABP -1,-1
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-2,2,0.4)(inf) RH_15deg ; go land 7 "" 1
+
+label -20 2 -1 0 0.18 @AS (q)
+label -29 7 -1 90 0.16 @P7 RH
+let histoR=RH00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = RH_15deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+let obs=PV_15deg[l=@ave,k=@ave]
+let model1=RH_15deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+SET VIEW V52 
+
+PPL AXLABP -1,0
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-2,2,0.4)(inf) RH_20deg ; go land 7 
+
+let bias = RH_20deg-RH_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-3,3,0.4) del(0)" bias[x=@sbx:7,y=@sbx:7]
+label -20 2 -1 0 0.18 @AS (r)
+let histoR=RH00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = RH_20deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+let obs=PV_20deg[l=@ave,k=@ave]
+let model1=RH_20deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+set view v53
+
+PPL AXLABP -1,0
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-2,2,0.4)(inf) RH_25deg ; go land 7
+let bias = RH_25deg-RH_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-3,3,0.5) del(0)" bias[x=@sbx:7,y=@sbx:7]
+label -20 2 -1 0 0.18 @AS (s)
+let histoR=RH00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = RH_25deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+let obs=PV_25deg[l=@ave,k=@ave]
+let model1=RH_25deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+
+set view v54
+
+PPL AXLABP -1,0
+fill/set_up/nolab/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-2,2,0.4)(inf) RH_30deg 
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 
+let bias = RH_30deg-RH_15deg
+contour/over/nolab/SIZE=0.10/SPACING=2/col=1/LEVELS="(-3,3,0.5) del(0)" bias[x=@sbx:7,y=@sbx:7]
+let histoR=RH00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = RH_30deg
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+let obs=PV_30deg[l=@ave,k=@ave]
+let model1=RH_30deg
+go regressxy
+  let p = obs
+  let q = model1
+go variance	
+label -12  1  -1 0  0.15 @P7 (r = `corr, precision=2`)
+label -20 2 -1 0 0.18 @AS (t)
+label 20 26 -1 0 0.14 @AS %
+
+!=================================================================================
+  ELIf `Fig eq 7` then   !  projected change in RCP8.5 boxplot
+!================================================================================== 
+use Waf_annual_PV_CombinedData.nc  !d=16
+
+let topo=mask[d=15]
+
+let historical_PV=PV00[d=16,l=@ave,GX=topo,GY=topo]
+
+let model_15deg_PV=PV15[d=16,l=@ave,GX=topo,GY=topo] 
+let model_20deg_PV=PV20[d=16,l=@ave,GX=topo,GY=topo]
+let model_25deg_PV=PV25[d=16,l=@ave,GX=topo,GY=topo] 
+let model_30deg_PV=PV30[d=16,l=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo
+let PV_20deg=rcp85_20deg_PV*topo
+let PV_25deg=rcp85_25deg_PV*topo
+let PV_30deg=rcp85_30deg_PV*topo
+
+!========== Change in RSDS=========================
+let historical_RSDS=RSDS00[d=16,l=@ave,GX=topo,GY=topo]
+
+let model_15deg_RSDS=RSDS15[d=16,l=@ave,GX=topo,GY=topo] 
+let model_20deg_RSDS=RSDS20[d=16,l=@ave,GX=topo,GY=topo]
+let model_25deg_RSDS=RSDS25[d=16,l=@ave,GX=topo,GY=topo] 
+let model_30deg_RSDS=RSDS30[d=16,l=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_RSDS=model_15deg_RSDS-historical_RSDS
+let rcp85_20deg_RSDS=model_20deg_RSDS-historical_RSDS
+let rcp85_25deg_RSDS=model_25deg_RSDS-historical_RSDS
+let rcp85_30deg_RSDS=model_30deg_RSDS-historical_RSDS
+
+let RSDS_15deg=rcp85_15deg_RSDS*topo
+let RSDS_20deg=rcp85_20deg_RSDS*topo
+let RSDS_25deg=rcp85_25deg_RSDS*topo
+let RSDS_30deg=rcp85_30deg_RSDS*topo
+
+let   npy = 3
+let   npx = 2
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.20,   0.070,   0.03,     0.20,    0.25,   0.05      
+
+SET VIEW V11
+PPL AXLABP 0,-1
+         let Pmax = 8
+         let Pmin=-8
+        let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=1:30.5:30.5/vlimit=`Pmin`:`Pmax`:2 TheFUT
+        let ParLab = -9.5
+        let icity = 0
+	  let model=0
+        let px = 2.3;
+        let pbint1 = 1.4
+        let pbint2 = 3
+
+        repeat /range = 1:4 (let icity = `icity + 1`; \
+        let region =  region`icity`; \
+        let Parm     =RSDS_15deg; \
+        let clone = lone`icity`; let clonw = lonw`icity`; \
+        let clatn= latn`icity`; let clats = lats`icity`; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 1; \
+        let mycol="blue_light"; go Plot_BoxplotB.jnl; \
+        let px = `px + pbint1`; \
+        let Parm     = RSDS_20deg; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  let mycol="red_light"; go Plot_BoxplotB.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm     = RSDS_25deg; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  PPL SHASET RESET;\
+	  let mycol="red"; go Plot_BoxplotB.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm     = RSDS_30deg; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  let mycol="red_dark"; go Plot_BoxplotB.jnl; \
+        let px = `px + pbint2`; \
+        )
+label -3.7 -6 -1 90 0.10 @P1 change in RSDS (W/m^2)
+
+label 2.0 6.5 -1 0 0.12 @P1 (a)
+
+SET VIEW V12 
+
+PPL AXLABP 0,0
+         let Pmax = 0.5
+         let Pmin=-1.2
+        let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=1:30.5:30.5/vlimit=`Pmin`:`Pmax`:0.2 TheFUT
+        let ParLab = -1.35
+        let icity = 0
+	  let model=0
+        let px = 2.3;
+        let pbint1 = 1.4
+        let pbint2 = 3
+
+        repeat /range = 1:4 (let icity = `icity + 1`; \
+        let region =  region`icity`; \
+        let Parm     =PV_15deg*100; \
+        let clone = lone`icity`; let clonw = lonw`icity`; \
+        let clatn= latn`icity`; let clats = lats`icity`; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 1; \
+        let mycol="blue_light"; go Plot_BoxplotB.jnl; \
+        let px = `px + pbint1`; \
+        let Parm     = PV_20deg*100; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  let mycol="red_light"; go Plot_BoxplotB.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm     = PV_25deg*100; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  PPL SHASET RESET;\
+	  let mycol="red"; go Plot_BoxplotB.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm     = PV_30deg*100; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  let mycol="red_dark"; go Plot_BoxplotB.jnl; \
+        let px = `px + pbint2`; \
+        )
+
+let start=-1.2
+let inc=.4
+repeat /range = 1:5 (let icity = `icity + 1`; \
+       label 31 `start-0.03` -1 0 0.11 @SR `start`.0;\
+	  let start=`start+inc`)
+label 37 -1 -1 90 0.10 @AS change in PV potential (%)
+label 2.0 0.38 -1 0 0.12 @P1 (b)
+SET VIEW V21
+
+let   nrow = 2
+      let   ncol = 1
+!     ! go multi_view [rows], [columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix]
+       go multi_view `nrow`,  `ncol`,   0.47,    0.07,   0.02,   0.20,    0.27,   0.038  BB
+	PPL AXLSZE  0.1,.10
+set view BB11
+
+PPL AXLABP 0,-1
+         let Pmax = 8
+         let Pmin=-8
+        let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=1:30:2/vlimit=`Pmin`:`Pmax`:2 TheFUT
+        let ParLab = -9
+        let icity = 0
+        let px = 1.8;
+        let pbint1 = 0.4
+        let pbint2 = 0.8
+        repeat /range = 1:14 (let icity = `icity + 1`; \
+        let zone =  Zone`icity`; \
+        let Parm   = RSDS_15deg*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+        let mycol="blue_light"; go Plot_BoxplotC.jnl; \
+        let px = `px + pbint1`; \
+        let Parm     = RSDS_20deg*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0;\
+	  let mycol="red_light"; go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = RSDS_25deg*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+	  PPL SHASET RESET;\
+	  let mycol="red"; go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = RSDS_30deg*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+	  let mycol="red_dark"; go Plot_BoxplotC.jnl; \
+        let px = `px + pbint2`; \
+         )
+ 
+label -1.3 -6 -1 90 0.08 @P1 change in RSDS (W/m^2)
+label 2.0 6.5 -1 0 0.12 @P1 (c)
+
+SET VIEW V31
+
+let   nrow = 2
+      let   ncol = 1
+!     ! go multi_view [rows], [columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix]
+       go multi_view `nrow`,  `ncol`,   0.47,    0.07,   0.02,   0.20,    0.02,   0.038  AA
+	PPL AXLSZE  0.1,.10
+set view AA11
+
+PPL AXLABP 0,-1
+         let Pmax = 0.5
+         let Pmin=-1.2
+        let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=1:30:2/vlimit=`Pmin`:`Pmax`:.20 TheFUT
+        let ParLab = -1.4
+        let icity = 0
+        let px = 1.8;
+        let pbint1 = 0.4
+        let pbint2 = 0.8
+        repeat /range = 1:14 (let icity = `icity + 1`; \
+        let zone =  Zone`icity`; \
+        let Parm   = PV_15deg*country`icity`*100; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 1; \
+        let mycol="blue_light"; go Plot_BoxplotC.jnl; \
+        let px = `px + pbint1`; \
+        let Parm     = PV_20deg*country`icity`*100; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0;\
+	  let mycol="red_light"; go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = PV_25deg*country`icity`*100; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+	  PPL SHASET RESET;\
+	  let mycol="red"; go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = PV_30deg*country`icity`*100; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+	  let mycol="red_dark"; go Plot_BoxplotC.jnl; \
+        let px = `px + pbint2`; \
+         )
+label 2.0 0.38 -1 0 0.12 @P1 (d)
+label -1.6 -1.15 -1 90 0.08 @AS change in PV potential (%)
+go polymark poly/pal=blue_light/line=1/over/nokey/nolab 6.0   -1.0  1 rectangle 1.0 ; label 6.4   -1.05  -1 0   0.08 @P1 1.5^oC
+go polymark poly/pal=red_light/line=1/over/nokey/nolab  9.0   -1.0  1 rectangle 1.0 ; label 9.4   -1.05  -1 0   0.08 @P1 2.0^oC
+go polymark poly/pal=red/line=1/over/nokey/nolab     12.0   -1.0  1 rectangle 1.0 ; label 12.4  -1.05  -1 0   0.08 @P1 2.5^oC
+go polymark poly/pal=red_dark/line=1/over/nokey/nolab   15.0    -1.0  1 rectangle 1.0 ; label 15.4  -1.05  -1 0   0.08 @P1 3.0^oC
+
+
+!================================================================================= 
+  ELIf `Fig eq 8` then   !  PV power change RCP 8.5  monthly variation
+!================================================================================== 
+use Waf_monthly_PV_CombinedData.nc  !d=16
+DEFINE AXIS/T=0:11:1/T0="1-JAN"/UNITS=days sawa
+
+let topo=mask[d=15]
+
+let historical_PV=PV00[d=16,GX=topo,GY=topo,GT=sawa@asn]
+
+let model_15deg_PV=PV15[d=16,GX=topo,GY=topo,GT=sawa@asn] 
+let model_20deg_PV=PV20[d=16,GX=topo,GY=topo,GT=sawa@asn]
+let model_25deg_PV=PV25[d=16,GX=topo,GY=topo,GT=sawa@asn] 
+let model_30deg_PV=PV30[d=16,GX=topo,GY=topo,GT=sawa@asn] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo
+let PV_20deg=rcp85_20deg_PV*topo
+let PV_25deg=rcp85_25deg_PV*topo
+let PV_30deg=rcp85_30deg_PV*topo
+
+let max_PV_15deg=PV_15deg[k=1:14@max]*100
+let min_PV_15deg=PV_15deg[k=1:14@min]*100
+let mean_PV_15deg=PV_15deg[k=1:14@ave]*100
+
+let max_PV_20deg=PV_20deg[k=1:14@max]*100
+let min_PV_20deg=PV_20deg[k=1:14@min]*100
+let mean_PV_20deg=PV_20deg[k=1:14@ave]*100
+
+let max_PV_25deg=PV_25deg[k=1:14@max]*100
+let min_PV_25deg=PV_25deg[k=1:14@min]*100
+let mean_PV_25deg=PV_25deg[k=1:14@ave]*100
+
+let max_PV_30deg=PV_30deg[k=1:14@max]*100
+let min_PV_30deg=PV_30deg[k=1:14@min]*100
+let mean_PV_30deg=PV_30deg[k=1:14@ave]*100
+
+         
+let   npy = 3
+let   npx = 4
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.17,   0.06,   0.02,     0.17,    0.3,   0.02     
+  SET WINDOW/ASPECT = 0.7/size=2
+
+PPL AXLABP 0,-1
+
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V`comp`1; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=mean_PV_15deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let max=max_PV_15deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let min=min_PV_15deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/VLIMITS=-2.5:4:.4/nolab/thickness=2/col=red model ; \
+	go plot_swath poly/over/nolab/nolab/pal=gray_light max min ; \
+	plot/over/VLIMITS=-2.5:4:.4/nolab/thickness=2/col=red model ; \
+	if `comp eq 1` then ;\
+	label/nouser 1 2.6 -1 0 0.2 @P7 GWL15 ;\
+	label/nouser -0.7 0.5 -1 90 0.2 @P7 Guinea ;\
+	let xpts = {4.4,5.4}; \
+	let ypts = {3.3,3.3}; \
+	plot/vs/over/line=8/thick/nolab xpts,ypts; \
+	plot/vs/over/nolab/line=1 {4.15,9.8,9.8,4.15,4.15}, {2.1,2.1,3.7,3.7,2.1};\
+	go polymark poly/pal=gray_light/over/nokey/nolab  5.0 2.4 10 square 1;\
+	label/nouse 1.7 1.75 -1 0 0.11 @P1 RCMs spread;\
+	label/nouser 1.7  2.08 -1 0   0.11 @P1 Rmean ;\
+	endif ;\
+	if `comp eq 2` then ;\
+	label/nouser -0.7 0.5 -1 90 0.2 @P7 Savannah ;\
+	endif ;\
+	if `comp eq 3` then ;\
+	label/nouser -0.7 0.7 -1 90 0.2 @P7 Sahel ;\
+	endif ;\
+	)
+label/nouser 0  7.5  -1 0   0.11 @P1 (a)
+label/nouser 0  4.8  -1 0   0.11 @P1 (e)
+label/nouser 0  2.1  -1 0   0.11 @P1 (i)
+!=============Legend for the month =================
+label -13  -3.5 -1 0 0.12 @P1 J
+label 13  -3.5 -1 0 0.12 @P1 F
+label 35  -3.5 -1 0 0.12 @P1 M
+label 60  -3.5 -1 0 0.12 @P1 A
+label 83  -3.5 -1 0 0.12 @P1 M
+label 108  -3.5 -1 0 0.12 @P1 J
+label 132  -3.5 -1 0 0.12 @P1 J
+label 158  -3.5 -1 0 0.12 @P1 A
+label 180  -3.5 -1 0 0.12 @P1 S
+label 205  -3.5 -1 0 0.12 @P1 O
+label 230 -3.5 -1 0 0.12 @P1 N
+label 250 -3.5 -1 0 0.12 @P1 D
+
+PPL AXLABP 0,0
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V`comp`2; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=mean_PV_20deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let max=max_PV_20deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let min=min_PV_20deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/VLIMITS=-2.5:4:.4/nolab/thickness=2/col=red model ; \
+	go plot_swath poly/over/nolab/nolab/pal=gray_light max min ; \
+	plot/over/VLIMITS=-2.5:4:.4/nolab/thickness=2/col=red model ; \
+	if `comp eq 1` then ;\
+	label/nouser 1 2.6 -1 0 0.2 @P7 GWL20 ;\
+	endif ;\
+	)
+label/nouser 0  7.5  -1 0   0.11 @P1 (b)
+label/nouser 0  4.8  -1 0   0.11 @P1 (f)
+label/nouser 0  2.1  -1 0   0.11 @P1 (j)
+
+
+!=============Legend for the month =================
+label -13  -3.5 -1 0 0.12 @P1 J
+label 13  -3.5 -1 0 0.12 @P1 F
+label 35  -3.5 -1 0 0.12 @P1 M
+label 60  -3.5 -1 0 0.12 @P1 A
+label 83  -3.5 -1 0 0.12 @P1 M
+label 108  -3.5 -1 0 0.12 @P1 J
+label 132  -3.5 -1 0 0.12 @P1 J
+label 158  -3.5 -1 0 0.12 @P1 A
+label 180  -3.5 -1 0 0.12 @P1 S
+label 205  -3.5 -1 0 0.12 @P1 O
+label 230 -3.5 -1 0 0.12 @P1 N
+label 250 -3.5 -1 0 0.12 @P1 D
+
+PPL AXLABP 0,0
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V`comp`3; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=mean_PV_25deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let max=max_PV_25deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let min=min_PV_25deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/VLIMITS=-2.5:4:.4/nolab/thickness=2/col=red model ; \
+	go plot_swath poly/over/nolab/nolab/pal=gray_light max min ; \
+	plot/over/VLIMITS=-2.5:4:.4/nolab/thickness=2/col=red model ; \
+	if `comp eq 1` then ;\
+	label/nouser 1 2.6 -1 0 0.2 @P7 GWL25 ;\
+	endif ;\
+	)
+
+!=============Legend for the month =================
+label -13  -3.5 -1 0 0.12 @P1 J
+label 13  -3.5 -1 0 0.12 @P1 F
+label 35  -3.5 -1 0 0.12 @P1 M
+label 60  -3.5 -1 0 0.12 @P1 A
+label 83  -3.5 -1 0 0.12 @P1 M
+label 108  -3.5 -1 0 0.12 @P1 J
+label 132  -3.5 -1 0 0.12 @P1 J
+label 158  -3.5 -1 0 0.12 @P1 A
+label 180  -3.5 -1 0 0.12 @P1 S
+label 205  -3.5 -1 0 0.12 @P1 O
+label 230 -3.5 -1 0 0.12 @P1 N
+label 250 -3.5 -1 0 0.12 @P1 D
+
+label/nouser 0  7.5  -1 0   0.11 @P1 (c)
+label/nouser 0  4.8  -1 0   0.11 @P1 (g)
+label/nouser 0  2.1  -1 0   0.11 @P1 (k)
+
+PPL AXLABP 0,0
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V`comp`4; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=mean_PV_30deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let max=max_PV_30deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let min=min_PV_30deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/VLIMITS=-2.5:4:.4/nolab/thickness=2/col=red model ; \
+	go plot_swath poly/over/nolab/nolab/pal=gray_light max min ; \
+	plot/over/VLIMITS=-2.5:4:.4/nolab/thickness=2/col=red model ; \
+	if `comp eq 1` then ;\
+	label/nouser 1 2.6 -1 0 0.2 @P7 GWL30 ;\
+	endif ;\
+	)
+
+!=============Legend for the month =================
+label -13  -3.5 -1 0 0.12 @P1 J
+label 13  -3.5 -1 0 0.12 @P1 F
+label 35  -3.5 -1 0 0.12 @P1 M
+label 60  -3.5 -1 0 0.12 @P1 A
+label 83  -3.5 -1 0 0.12 @P1 M
+label 108  -3.5 -1 0 0.12 @P1 J
+label 132  -3.5 -1 0 0.12 @P1 J
+label 158  -3.5 -1 0 0.12 @P1 A
+label 180  -3.5 -1 0 0.12 @P1 S
+label 205  -3.5 -1 0 0.12 @P1 O
+label 230 -3.5 -1 0 0.12 @P1 N
+label 250 -3.5 -1 0 0.12 @P1 D
+
+label/nouser 0  7.5  -1 0   0.11 @P1 (d)
+label/nouser 0  4.8  -1 0   0.11 @P1 (h)
+label/nouser 0  2.1  -1 0   0.11 @P1 (l)
+exit
+!========== Change in RSDS=========================
+let historical_RSDS=RSDS00[d=16,l=@ave,GX=topo,GY=topo]
+
+let model_15deg_RSDS=RSDS15[d=16,l=@ave,GX=topo,GY=topo] 
+let model_20deg_RSDS=RSDS20[d=16,l=@ave,GX=topo,GY=topo]
+let model_25deg_RSDS=RSDS25[d=16,l=@ave,GX=topo,GY=topo] 
+let model_30deg_RSDS=RSDS30[d=16,l=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_RSDS=model_15deg_RSDS-historical_RSDS
+let rcp85_20deg_RSDS=model_20deg_RSDS-historical_RSDS
+let rcp85_25deg_RSDS=model_25deg_RSDS-historical_RSDS
+let rcp85_30deg_RSDS=model_30deg_RSDS-historical_RSDS
+
+let RSDS_15deg=rcp85_15deg_RSDS*topo
+let RSDS_20deg=rcp85_20deg_RSDS*topo
+let RSDS_25deg=rcp85_25deg_RSDS*topo
+let RSDS_30deg=rcp85_30deg_RSDS*topo
+
+
+
+!=================================================================================
+  ELIf `Fig eq 9` then   !  PV power change RCP 8.5
+!================================================================================== 
+use Waf_annual_PV_CombinedData.nc  !d=16
+
+let c2= -4.81E-6 !TAS
+let c3=7.29E-6 !VWS
+let c4=-5.45E-7 !RH
+let topo=mask[d=15]
+
+!==================== CHange in PV potential============
+let historical_PV=PV00[d=16,k=@ave,GX=topo,GY=topo]
+
+let model_15deg_PV=PV15[d=16,k=@ave,GX=topo,GY=topo] 
+let model_20deg_PV=PV20[d=16,k=@ave,GX=topo,GY=topo]
+let model_25deg_PV=PV25[d=16,k=@ave,GX=topo,GY=topo] 
+let model_30deg_PV=PV30[d=16,k=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo*100
+let PV_20deg=rcp85_20deg_PV*topo*100
+let PV_25deg=rcp85_25deg_PV*topo*100
+let PV_30deg=rcp85_30deg_PV*topo*100
+
+!=====temperature===================
+let historical_tas=tas00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_tas=tas15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_tas=tas20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_tas=tas25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_tas=tas30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_tas=model_15deg_tas-historical_tas
+let rcp85_20deg_tas=model_20deg_tas-historical_tas
+let rcp85_25deg_tas=model_25deg_tas-historical_tas
+let rcp85_30deg_tas=model_30deg_tas-historical_tas
+
+let tas_15deg=rcp85_15deg_tas*topo
+let tas_20deg=rcp85_20deg_tas*topo
+let tas_25deg=rcp85_25deg_tas*topo
+let tas_30deg=rcp85_30deg_tas*topo
+
+!============================VWS===================
+let historical_VWS=VWS00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_VWS=VWS15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_VWS=VWS20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_VWS=VWS25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_VWS=VWS30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_VWS=model_15deg_VWS-historical_VWS
+let rcp85_20deg_VWS=model_20deg_VWS-historical_VWS
+let rcp85_25deg_VWS=model_25deg_VWS-historical_VWS
+let rcp85_30deg_VWS=model_30deg_VWS-historical_VWS
+
+let VWS_15deg=rcp85_15deg_VWS*topo
+let VWS_20deg=rcp85_20deg_VWS*topo
+let VWS_25deg=rcp85_25deg_VWS*topo
+let VWS_30deg=rcp85_30deg_VWS*topo
+
+!==============================RH=========================
+let historical_RH=RH00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_RH=RH15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_RH=RH20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_RH=RH25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_RH=RH30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_RH=model_15deg_RH-historical_RH
+let rcp85_20deg_RH=model_20deg_RH-historical_RH
+let rcp85_25deg_RH=model_25deg_RH-historical_RH
+let rcp85_30deg_RH=model_30deg_RH-historical_RH
+
+let RH_15deg=rcp85_15deg_RH*topo
+let RH_20deg=rcp85_20deg_RH*topo
+let RH_25deg=rcp85_25deg_RH*topo
+let RH_30deg=rcp85_30deg_RH*topo
+
+!==================== RSDS ================================
+let model_hist_RSDS=RSDS00[d=16,k=@ave,GX=topo,GY=topo] 
+
+let hist_RSDS=model_hist_RSDS*topo
+!=================Change in PV induced by TAS ================
+
+let PV_15deg_tas=hist_RSDS*c2*tas_15deg*100
+let PV_20deg_tas=hist_RSDS*c2*tas_20deg*100
+let PV_25deg_tas=hist_RSDS*c2*tas_25deg*100
+let PV_30deg_tas=hist_RSDS*c2*tas_30deg*100
+
+let tas_chan_15deg=PV_15deg_tas/PV_15deg
+let tas_chan_20deg=PV_20deg_tas/PV_20deg
+let tas_chan_25deg=PV_25deg_tas/PV_25deg
+let tas_chan_30deg=PV_30deg_tas/PV_30deg
+
+!=================Change in PV induced by VWS ================
+
+let PV_15deg_vws=hist_RSDS*c3*VWS_15deg*100
+let PV_20deg_vws=hist_RSDS*c3*VWS_20deg*100
+let PV_25deg_vws=hist_RSDS*c3*VWS_25deg*100
+let PV_30deg_vws=hist_RSDS*c3*VWS_30deg*100
+
+let vws_chan_15deg=PV_15deg_vws/PV_15deg
+let vws_chan_20deg=PV_20deg_vws/PV_20deg
+let vws_chan_25deg=PV_25deg_vws/PV_25deg
+let vws_chan_30deg=PV_30deg_vws/PV_30deg
+
+
+!=================Change in PV induced by RH ================
+
+let PV_15deg_RH=hist_RSDS*c4*RH_15deg*100
+let PV_20deg_RH=hist_RSDS*c4*RH_20deg*100
+let PV_25deg_RH=hist_RSDS*c4*RH_25deg*100
+let PV_30deg_RH=hist_RSDS*c4*RH_30deg*100
+
+
+!========Key Parameters==================
+        !**** Set parameter for SHAKEY do_key, orient, klab_size, klab_inc, klab_dig, klab_len, kx_lo, kx_hi, ky_lo, ky_hi
+        let do_key=1     !    0 if the key will not be displayed, 1 if it will (0)
+        let orient=1       !    0 for horizontal, 1 for vertical (0)
+        let klab_size=0.10  !    if non-zero: height of key label characters in inches (0)
+        let klab_inc=0     !    if non-zero: every klab_ince key level is labelled (0)
+        let klab_dig=1     !    number of sig digits in the key (3)
+        let klab_len=8     !    max characters in a key label (9)
+        let kx_lo=4.9  !    X coord of left side of key in inches
+        let kx_hi=5.1   !    X coord of right side of key in inches
+        let ky_lo=1.4   !    Y coord of bottom of key in inches
+        let ky_hi=9.8  !    Y coord of top of key in inches
+       
+
+
+let   npy = 3
+let   npx = 4
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.18,   0.06,   0.02,     0.18,    0.25,   0.032     
+
+
+let rlonD_start =  -20
+let rlonD_stop  =   20
+let rlatD_start =   0
+let rlatD_stop  =   25.2
+
+PPL AXLSZE 0.12,0.12
+
+!==============Plotting ==================
+
+!=====================================Change induced by TAS===================================
+
+SET VIEW V11
+PPL AXLABP 0,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_tas[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS  (a)
+label -28 10 -1 90 0.16 @P7 TAS 
+label -5 28 -1 0 0.20 @P7 GWL1.5
+
+
+SET VIEW V12
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_tas[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS  (b)
+label -5 28 -1 0 0.20 @P7 GWL2.0
+
+SET VIEW V13
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_tas[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS  (c)
+label -5 28 -1 0 0.20 @P7 GWL2.5
+
+SET VIEW V14
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_tas[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS  (d)
+label -5 28 -1 0 0.20 @P7 GWL3.0
+!=====================================Change induced by VWS===================================
+SET VIEW V21
+PPL AXLABP 0,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_vws[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS  (e)
+label -28 10 -1 90 0.16 @P7 WVS
+SET VIEW V22
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_vws[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (f)
+
+SET VIEW V23
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_vws[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (g)
+
+SET VIEW V24
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_vws[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (h)
+
+!=====================================Change induced by RH===================================
+SET VIEW V31
+PPL AXLABP -1,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_rh[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (i)
+label -28 10 -1 90 0.16 @P7 RH
+
+SET VIEW V32
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_rh[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (j)
+
+SET VIEW V33
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_rh[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (k)
+
+SET VIEW V34
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/set_up/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_rh[l=@ave] 
+
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (l)
+label/nouser 3.5 8.5 -1 0 0.12 @AS (%)
+
+!=================================================================================
+  ELIf `Fig eq 10` then   !  PV power change RCP 4.5 for the zones monthly
+!================================================================================== 
+use Waf_annual_PV_CombinedData.nc  !d=16
+
+let topo=mask[d=15]
+
+let c1= 1.57 ! °C
+let c2= 0.961
+let c3= 0.029 ! °C m^2*1/W
+let c4= -1.457 ! °C* 1/sm
+let c5= 0.109  !°C/RH%
+let Stc=25
+let gamma=-0.005
+
+let VAR1="TAS"
+let VAR2="VWS"
+let VAR3="RH"
+let VAR4="RSDS"
+
+let comp=0
+repeat /range = 1:4 (let comp = `comp + 1`; \
+	let variable=VAR`comp`;\
+	let historical_`variable`_00=`variable`15[d=16,k=@ave,GX=topo,GY=topo];\
+	let historical_`variable`_30=`variable`30[d=16,k=@ave,GX=topo,GY=topo];\
+	let `variable`00_new=historical_`variable`_00*topo;\
+	let `variable`30_new=historical_`variable`_30*topo)
+
+let temp1=TAS00_new; let RSDS1=RSDS00_new;let RH1=RH00_new;let VWS1=VWS00_new
+let temp2=TAS30_new; let RSDS2=RSDS30_new;let RH2=RH30_new;let VWS2=VWS30_new
+
+
+
+let comp=0
+repeat /range = 1:2 (let comp = `comp + 1`; \
+	let Tcell= c1 + c2*temp`comp` + c3*RSDS`comp` + c4*VWS`comp` + c5*RH`comp`;\
+	let perform_ratio`comp`= 1+ gamma*(Tcell - Stc))
+
+
+
+let   npy = 4
+let   npx = 3
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.12,   0.08,   0.02,     0.12,    0.3,   0.06     
+  SET WINDOW/ASPECT = 0.7/size=2
+
+
+
+!==============Plotting ====================================================
+let tag1="(a)"
+let tag2="(b)"
+let tag3="(c)"
+
+	let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V1`comp`; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=rsds1[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio1[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	PPL AXLABP -1,0;\
+	let cname=tag`comp`;\
+	if `comp eq 1` then PPL AXLABP -1,-1;\
+	plot/vs/nolab/sym=21/size=0.2/col=red/hlimit=120:320:25/vlimit=0.92:1.02:0.01 model,model1;\
+	let model=rsds2[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio2[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/vs/over/nolab/color=blue/sym=21/size=0.2/hlimit=120:320:25/vlimit=0.92:1.02:0.01 model,model1;\
+	if `comp eq 1` then;\
+	label/nouser 1.4 2.2 0.16 @P7 Guinea;\
+	label/nouser -0.8 0.5 -1 90 0.12 @AS Pr(%);\
+	endif;\
+	if `comp eq 2` then label/nouser 1.4 2.2 0.16 @P7 Savannah;\
+	if `comp eq 3` then label/nouser 1.4 2.2 0.16 @P7 Sahel;\
+	label/nouser 0.6 -0.6 -1 0 0.10 @P1 RSDS (W/m^2);\
+	label/nouser 0.25 1.6 0.12 @P1 `cname`)
+
+exit
+let tag1="(d)"
+let tag2="(e)"
+let tag3="(f)"
+let comp=0
+
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V2`comp`; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=temp1[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio1[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let cname=tag`comp`;\
+	PPL AXLABP -1,0;\
+	if `comp eq 1` then PPL AXLABP -1,-1;\
+	plot/vs/nolab/hlimit=18:36:2/vlimit=0.92:1.02:0.01 model,model1;\
+	let model=temp2[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio2[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/vs/nolab/color=blue/hlimit=18:36:2/vlimit=0.92:1.02:0.01 model,model1;\
+	if `comp eq 1` then label/nouser -0.8 0.5 -1 90 0.12 @AS Pr(%);\
+	label/nouser 0.6 -0.6 -1 0 0.10 @P1 TAS (^oC);\
+	label/nouser 0.25 1.6 0.12 @P1 `cname`)
+
+let tag1="(g)"
+let tag2="(h)"
+let tag3="(i)"
+
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V3`comp`; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=vws1[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio1[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let cname=tag`comp`;\
+	PPL AXLABP -1,0;\
+	if `comp eq 1` then PPL AXLABP -1,-1;\
+	plot/vs/nolab/hlimit=1.5:5:0.5/vlimit=0.92:1.02:0.01 model,model1;\
+	let model=vws2[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio2[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	if `comp eq 1` then label/nouser -0.8 0.5 -1 90 0.12 @AS Pr(%);\
+	plot/vs/nolab/color=blue/hlimit=1.5:5:0.5/vlimit=0.92:1.02:0.01 model,model1;\
+	label/nouser 0.6 -0.6 -1 0 0.10 @P1 VWS (m/s);\
+	label/nouser 0.25 1.6 0.12 @P1 `cname`)
+
+let tag1="(j)"
+let tag2="(k)"
+let tag3="(l)"
+
+	let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V4`comp`; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=rh1[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio1[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let cname=tag`comp`;\
+	PPL AXLABP -1,0;\
+	if `comp eq 1` then PPL AXLABP -1,-1;\
+	plot/vs/nolab/hlimit=10:100:10/vlimit=0.92:1.02:0.01 model,model1;\
+	let model=rh2[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio2[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/vs/nolab/color=blue/hlimit=10:100:10/vlimit=0.92:1.02:0.01 model,model1;\
+	if `comp eq 1` then label/nouser -0.8 0.5 -1 90 0.12 @AS Pr(%);\
+	label/nouser 0.6 -0.6 -1 0 0.10 @AS RH (%);\
+	label/nouser 0.25 1.6 0.12 @P1 `cname`)
+
+	
+
+
+!=================================================================================
+  ELIf `Fig eq 11` then   !  PV power change RCP 4.5 for the zones monthly
+!================================================================================== 
+use Waf_annual_PV_CombinedData.nc  !d=16
+
+let topo=mask[d=15]
+
+let c1= 1.57 ! °C
+let c2= 0.961
+let c3= 0.029 ! °C m^2*1/W
+let c4= -1.457 ! °C* 1/sm
+let c5= 0.109  !°C/RH%
+let Stc=25
+let gamma=-0.005
+
+let VAR1="TAS"
+let VAR2="VWS"
+let VAR3="RH"
+let VAR4="RSDS"
+
+let comp=0
+repeat /range = 1:4 (let comp = `comp + 1`; \
+	let variable=VAR`comp`;\
+	let historical_`variable`_15=`variable`15[d=16,k=@ave,GX=topo,GY=topo]-`variable`00[d=16,k=@ave,GX=topo,GY=topo];\
+	let historical_`variable`_20=`variable`20[d=16,k=@ave,GX=topo,GY=topo]-`variable`00[d=16,k=@ave,GX=topo,GY=topo];\
+	let historical_`variable`_25=`variable`25[d=16,k=@ave,GX=topo,GY=topo]-`variable`00[d=16,k=@ave,GX=topo,GY=topo];\
+	let historical_`variable`_30=`variable`30[d=16,k=@ave,GX=topo,GY=topo]-`variable`00[d=16,k=@ave,GX=topo,GY=topo];\
+	let `variable`15_chng=historical_`variable`_15*topo;\
+	let `variable`20_chng=historical_`variable`_20*topo;\
+	let `variable`25_chng=historical_`variable`_25*topo;\
+	let `variable`30_chng=historical_`variable`_30*topo)
+
+let temp1=TAS15_chng[k=@ave]; let RSDS1=RSDS15_chng[k=@ave];let RH1=RH15_chng[k=@ave];let VWS1=VWS15_chng[k=@ave]
+let temp2=TAS20_chng[k=@ave]; let RSDS2=RSDS20_chng[k=@ave];let RH2=RH20_chng[k=@ave];let VWS2=VWS20_chng[k=@ave]
+let temp3=TAS25_chng[k=@ave]; let RSDS3=RSDS25_chng[k=@ave];let RH3=RH25_chng[k=@ave];let VWS3=VWS25_chng[k=@ave]
+let temp4=TAS30_chng[k=@ave]; let RSDS4=RSDS30_chng[k=@ave];let RH4=RH30_chng[k=@ave];let VWS4=VWS30_chng[k=@ave]
+
+let   npy = 4
+let   npx = 3
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.15,   0.08,   0.065,     0.15,    0.22,   0.05     
+  SET WINDOW/ASPECT = 0.7/size=2
+
+
+let comp=0
+repeat /range = 1:4 (let comp = `comp + 1`; \
+	let Tcell= c1 + c2*temp`comp` + c3*RSDS`comp` + c4*VWS`comp` + c5*RH`comp`;\
+	let perform_ratio`comp`= 1+ gamma*(Tcell - Stc))
+
+!==============Plotting ====================================================
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V1`comp`; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=RSDS`comp`[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio`comp`[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/vs/nolab/sym=21/size=.2/color=blue model,model1)
+
+exit
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V2`comp`; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=temp`comp`[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio`comp`[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/vs/nolab model,model1)
+
+	let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V3`comp`; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=VWS`comp`[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio`comp`[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/vs/nolab model,model1)
+
+let comp=0
+repeat /range = 1:3 (let comp = `comp + 1`; \
+      SET VIEW V4`comp`; \
+      PPL TXLABP,0; \
+      let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=RH`comp`[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	let model1=perform_ratio`comp`[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/vs/nolab model,model1)
+
+
+
+!=================================================================================
+  ELIf `Fig eq 13` then   !  PV power change RCP 8.5
+!================================================================================== 
+use Waf_annual_PV_CombinedData.nc  !d=16
+
+let c2= -4.81E-6 !TAS
+let c3=7.29E-6 !VWS
+let c4=-5.45E-7 !RH
+let topo=mask[d=15]
+
+!==================== CHange in PV potential============
+let historical_PV=PV00[d=16,GX=topo,GY=topo]
+
+let model_15deg_PV=PV15[d=16,GX=topo,GY=topo] 
+let model_20deg_PV=PV20[d=16,GX=topo,GY=topo]
+let model_25deg_PV=PV25[d=16,GX=topo,GY=topo] 
+let model_30deg_PV=PV30[d=16,GX=topo,GY=topo] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo*100
+let PV_20deg=rcp85_20deg_PV*topo*100
+let PV_25deg=rcp85_25deg_PV*topo*100
+let PV_30deg=rcp85_30deg_PV*topo*100
+
+
+let   npy = 2
+let   npx = 2
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.22,   0.065,   0.02,   0.22,    0.4,   0.07     
+
+
+let rlonD_start =  -20
+let rlonD_stop  =   20
+let rlatD_start =   0
+let rlatD_stop  =   25.2
+
+PPL AXLSZE 0.12,0.12
+
+!==============Plotting ==================
+set VIEW V11
+PPL AXLABP 0,-1
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg[l=@ave,k=@ave] ; go land 7 "" 1
+
+label -19 0.6 -1 0 0.14 @P1 (a) 
+label -5 28 -1 0 0.20 @P7 GWL15
+
+let histoR=PV00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = PV_15deg[l=@ave,k=@ave]
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+SET VIEW V12
+PPL AXLABP 0,0
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg[l=@ave,k=@ave] ; go land 7 
+
+label -19 0.6 -1 0 0.14 @P1 (b)
+label -5 28 -1 0 0.20 @P7 GWL20
+
+let histoR=PV00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = PV_20deg[l=@ave,k=@ave]
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+SET VIEW V21
+PPL AXLABP -1,-1
+
+fill/nolab/nokey/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg[l=@ave,k=@ave] ; go land 7 
+
+label -19 0.6 -1 0 0.14 @P1 (c)
+label -5 28 -1 0 0.20 @P7 GWL25
+
+let histoR=PV00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = PV_25deg[l=@ave,k=@ave]
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+SET VIEW V22
+PPL AXLABP -1,0
+
+fill/nolab/nokey/set_up/pal=orange_purple/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/level=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg[l=@ave,k=@ave] 
+
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 
+label -19 0.6 -1 0 0.14 @P1 (d)
+label -5 28 -1 0 0.20 @P7 GWL30
+
+let histoR=PV00[d=16,k=1:14,GX=topo,GY=topo]
+let kmb = 1 ; let kme = 14
+let Par00 = histoR
+let ParCHD = PV_30deg[l=@ave,k=@ave]
+let mdmin = 10
+let skp=8
+go DoSignificanceTests.jnl
+
+!label/nouser 4.6 0 -1 90 0.12 @AS change in PV potential (%)
+
+
+exit 
+SET VIEW V21
+let   npy = 1
+let   npx = 1
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.20,   0.070,   0.03,     0.20,    0.50,   0.05 AA     
+
+
+SET VIEW AA11 
+
+PPL AXLABP 0,-1
+         let Pmax = 0.8
+         let Pmin=-1.2
+        let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=1:30.5:30.5/vlimit=`Pmin`:`Pmax`:0.2 TheFUT
+        let ParLab = -1.35
+        let icity = 0
+	  let model=0
+        let px = 2.3;
+        let pbint1 = 1.4
+        let pbint2 = 3
+
+        repeat /range = 1:4 (let icity = `icity + 1`; \
+        let region =  region`icity`; \
+        let Parm     =PV_15deg[l=@ave]; \
+        let clone = lone`icity`; let clonw = lonw`icity`; \
+        let clatn= latn`icity`; let clats = lats`icity`; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 1; \
+        let mycol="blue_light"; go Plot_BoxplotB.jnl; \
+        let px = `px + pbint1`; \
+        let Parm     = PV_20deg[l=@ave]; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  let mycol="red_light"; go Plot_BoxplotB.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm     = PV_25deg[l=@ave]; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  PPL SHASET RESET;\
+	  let mycol="red"; go Plot_BoxplotB.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm     = PV_30deg[l=@ave]; \
+        let Par     = Parm[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; let ilab = 0; \
+	  let mycol="red_dark"; go Plot_BoxplotB.jnl; \
+        let px = `px + pbint2`; \
+        )
+label 1.8 0.5 -1 0 0.12 @P1 (e)
+label -5.5 -1.2 -1 90 0.12 @AS change in PV potential (%)
+
+SET VIEW V22
+
+let   nrow = 1
+      let   ncol = 1
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.55,   0.3,   0.03,     0.20,    0.50,   0.05 BB     
+	PPL AXLSZE  0.1,.10
+set view BB11
+
+PPL AXLABP 0,0
+         let Pmax = 0.8
+         let Pmin=-1.2
+        let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=1:30:2/vlimit=`Pmin`:`Pmax`:.20 TheFUT
+        let ParLab = -1.4
+        let icity = 0
+        let px = 1.8;
+        let pbint1 = 0.4
+        let pbint2 = 0.8
+        repeat /range = 1:14 (let icity = `icity + 1`; \
+        let zone =  Zone`icity`; \
+	  PPL SHASET RESET;\
+        let Parm   = PV_15deg[l=@ave]*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 1; \
+        let mycol="blue_light"; go Plot_BoxplotC.jnl; \
+        let px = `px + pbint1`; \
+        let Parm     = PV_20deg[l=@ave]*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0;\
+	  let mycol="red_light"; go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = PV_25deg[l=@ave]*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+	  PPL SHASET RESET;\
+	  let mycol="red"; go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = PV_30deg[l=@ave]*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+	  let mycol="red_dark"; go Plot_BoxplotC.jnl; \
+        let px = `px + pbint2`; \
+         )
+
+
+label 1.8 0.5 -1 0 0.12 @P1 (f)
+
+go polymark poly/pal=blue_light/line=1/over/nokey/nolab 6.0   -1.0  1 rectangle 1.0 ; label 6.4   -1.05  -1 0   0.08 @P1 1.5^oC
+go polymark poly/pal=red_light/line=1/over/nokey/nolab  9.0   -1.0  1 rectangle 1.0 ; label 9.4   -1.05  -1 0   0.08 @P1 2.0^oC
+go polymark poly/pal=red/line=1/over/nokey/nolab     12.0   -1.0  1 rectangle 1.0 ; label 12.4  -1.05  -1 0   0.08 @P1 2.5^oC
+go polymark poly/pal=red_dark/line=1/over/nokey/nolab   15.0    -1.0  1 rectangle 1.0 ; label 15.4  -1.05  -1 0   0.08 @P1 3.0^oC
+
+
+
+!================================================================================= 
+  ELIf `Fig eq 14` then   !  PV power change RCP 8.5  monthly variation
+!================================================================================== 
+use Waf_monthly_PV_CombinedData.nc  !d=16
+DEFINE AXIS/T=0:11:1/T0="1-JAN"/UNITS=days sawa
+
+let topo=mask[d=15]
+
+let historical_PV=PV00[d=16,GX=topo,GY=topo,GT=sawa@asn]
+
+let model_15deg_PV=PV15[d=16,GX=topo,GY=topo,GT=sawa@asn] 
+let model_20deg_PV=PV20[d=16,GX=topo,GY=topo,GT=sawa@asn]
+let model_25deg_PV=PV25[d=16,GX=topo,GY=topo,GT=sawa@asn] 
+let model_30deg_PV=PV30[d=16,GX=topo,GY=topo,GT=sawa@asn] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo
+let PV_20deg=rcp85_20deg_PV*topo
+let PV_25deg=rcp85_25deg_PV*topo
+let PV_30deg=rcp85_30deg_PV*topo
+
+let mean_PV_15deg=PV_15deg[k=1:14@ave]*100
+let mean_PV_20deg=PV_20deg[k=1:14@ave]*100
+let mean_PV_25deg=PV_25deg[k=1:14@ave]*100
+let mean_PV_30deg=PV_30deg[k=1:14@ave]*100
+        
+let   npy = 2
+let   npx = 4
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.20,   0.06,   0.02,     0.22,    0.5,   0.02     
+  SET WINDOW/ASPECT = 0.7/size=2
+
+
+
+let comp=0
+
+repeat /range = 1:3 (let comp = `comp + 1`; \
+	SET VIEW V1`comp`;\
+	PPL AXLABP 0,0;\
+	PPL TXLABP,0; \
+	if `comp eq 1` then ;\
+	PPL AXLABP 0,-1;\
+	ENDIF;\
+	let clone = lone`comp+1`; let clonw = lonw`comp+1`; \
+	let clatn = latn`comp+1`; let clats = lats`comp+1`; \
+	let model=mean_PV_15deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/col=bluelight/VLIMITS=-0.5:0.5:.1/nolab/thickness=2 model ; \
+	let model=mean_PV_20deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/col=green/over/VLIMITS=-0.5:0.5:.1/nolab/thickness=2 model ; \
+	let model=mean_PV_25deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/col=purple/over/VLIMITS=-0.5:0.5:.1/nolab/thickness=2 model ; \
+	let model=mean_PV_30deg[x=`clonw`:`clone`@ave,y=`clats`:`clatn`@ave]; \
+	plot/col=red/over/VLIMITS=-0.5:0.5:.1/nolab/thickness=2 model;\
+	if `comp eq 1` then ;\
+	label/nouser 0.0 2.6 -1 0 0.2 @AS (a) Guinea ;\
+	let xpts = {1.8,4.3}; \
+	let ypts = {-0.26,-0.26}; \
+	plot/vs/over/line=10/thick/nolab xpts,ypts; \
+	let ypts = {-0.32,-0.32}; \
+	plot/vs/over/line=9/thick/nolab xpts,ypts; \
+	let ypts = {-0.38,-0.38}; \
+	plot/vs/over/line=12/thick/nolab xpts,ypts; \
+	let ypts = {-0.44,-0.44}; \
+	plot/vs/over/line=8/thick/nolab xpts,ypts; \
+	plot/vs/over/nolab/line=1 {1.5,6.6,6.6,1.5,1.5}, {-0.20,-0.20,-0.48,-0.48,-0.20};\
+	label/nouser 1.5  0.7  -1 0   0.13 @P1 GWL1.5;\
+	label/nouser 1.5  0.5 -1 0   0.13 @P1 GWL2.0;\
+	label/nouser 1.5  0.3 -1 0   0.13 @P1 GWL2.5;\
+	label/nouser 1.5  0.1 -1 0   0.13 @P1 GWL3.0;\
+	label/nouser -0.65  1.2 -1 90   0.13 @AS (%);\
+	endif;\
+	if `comp eq 2` then;\
+	label/nouser 0.0 2.6 -1 0 0.2 @AS (b) Savannah ;\
+	endif;\
+	label -10  -0.6 -1 0 0.12  @P1 J ;\
+      label 16   -0.6 -1 0 0.12  @P1 F ;\
+      label 38   -0.6 -1 0 0.12  @P1 M ;\
+      label 63   -0.6 -1 0 0.12  @P1 A ;\
+      label 86   -0.6 -1 0 0.12  @P1 M ;\
+      label 111  -0.6 -1 0 0.12  @P1 J ;\
+      label 135  -0.6 -1 0 0.12  @P1 J ;\
+      label 161  -0.6 -1 0 0.12  @P1 A ;\
+      label 183  -0.6 -1 0 0.12  @P1 S ;\
+      label 208  -0.6 -1 0 0.12  @P1 O ;\
+      label 233  -0.6 -1 0 0.12  @P1 N ;\
+      label 253  -0.6 -1 0 0.12  @P1 D)
+
+label/nouser 0.0 2.6 -1 0 0.2 @AS (c) Sahel 
+
+!=============================== Boxplot====================================
+use Waf_annual_PV_CombinedData.nc  !d=17
+
+let c2= -4.81E-6 !TAS
+let c3=7.29E-6 !VWS
+let c4=-5.45E-7 !RH
+let topo=mask[d=15]
+
+!==================== CHange in PV potential============
+let historical_PV=PV00[d=17,GX=topo,GY=topo]
+
+let model_15deg_PV=PV15[d=17,GX=topo,GY=topo] 
+let model_20deg_PV=PV20[d=17,GX=topo,GY=topo]
+let model_25deg_PV=PV25[d=17,GX=topo,GY=topo] 
+let model_30deg_PV=PV30[d=17,GX=topo,GY=topo] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo*100
+let PV_20deg=rcp85_20deg_PV*topo*100
+let PV_25deg=rcp85_25deg_PV*topo*100
+let PV_30deg=rcp85_30deg_PV*topo*100
+
+SET VIEW V21
+
+let   npy = 1
+let   npx = 1
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.64,   0.06,   0.03,     0.20,    0.48,   0.05 BB     
+	PPL AXLSZE  0.1,.10
+
+SET VIEW BB11
+PPL AXLABP 0,-1
+PPL AXLSZE 0.08,0.08
+
+         let Pmax = 0.8
+         let Pmin=-1.2
+        let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+        go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=2:30:2/vlimit=`Pmin`:`Pmax`:.20 TheFUT
+        let ParLab = -1.3
+        let icity = 0
+        let px = 2.3;
+        let pbint1 = 0.4
+        let pbint2 = 0.8
+	
+        repeat /range = 1:14 (let icity = `icity + 1`; \
+        let zone =  Zone`icity`; \
+	  PPL SHASET RESET;\
+        let Parm   = PV_15deg[l=@ave]*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 1; \
+        let mycol="blue"; go Plot_BoxplotC.jnl; \
+        let px = `px + pbint1`; \
+        let Parm     = PV_20deg[l=@ave]*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0;\
+	  let mycol="green"; go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = PV_25deg[l=@ave]*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+	  PPL SHASET RESET;\
+	  let mycol="purple"; go Plot_BoxplotC.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = PV_30deg[l=@ave]*country`icity`; \
+        let Par     = Parm[x=@ave,y=@ave]; let ilab = 0; \
+	  let mycol="red"; go Plot_BoxplotC.jnl; \
+        let px = `px + pbint2`; \
+         )
+
+
+label 2.1 0.5 -1 0 0.16 @AS (d)
+
+go polymark poly/pal=blue/line=1/over/nokey/nolab 6.0   -1.0  1 rectangle 1.0 ; label 6.4   -1.05  -1 0   0.10 @P1 GWL1.5
+go polymark poly/pal=green/line=1/over/nokey/nolab  9.0   -1.0  1 rectangle 1.0 ; label 9.4   -1.05  -1 0   0.10 @P1 GWL2.0
+go polymark poly/pal=purple/line=1/over/nokey/nolab     12.0   -1.0  1 rectangle 1.0 ; label 12.4  -1.05  -1 0   0.10 @P1 GWL2.5
+go polymark poly/pal=red/line=1/over/nokey/nolab   15.0    -1.0  1 rectangle 1.0 ; label 15.4  -1.05  -1 0   0.10 @P1 GWL3.0
+label/nouser -0.6  0.8 -1 90   0.08 @AS (%)
+
+
+!=================================================================================
+  ELIf `Fig eq 15` then   !  PV power change RCP 8.5
+!================================================================================== 
+use Waf_annual_PV_CombinedData.nc  !d=16
+
+let c1=11.3E-4
+let c2= -4.81E-6 !TAS
+let c3=7.29E-6 !VWS
+let c4=-5.45E-7 !RH
+let c5=-1.45E-7 !RSDS
+let topo=mask[d=15]
+
+!==================== CHange in PV potential============
+let historical_PV=PV00[d=16,k=@ave,GX=topo,GY=topo]
+
+let model_15deg_PV=PV15[d=16,k=@ave,GX=topo,GY=topo] 
+let model_20deg_PV=PV20[d=16,k=@ave,GX=topo,GY=topo]
+let model_25deg_PV=PV25[d=16,k=@ave,GX=topo,GY=topo] 
+let model_30deg_PV=PV30[d=16,k=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo*100
+let PV_20deg=rcp85_20deg_PV*topo*100
+let PV_25deg=rcp85_25deg_PV*topo*100
+let PV_30deg=rcp85_30deg_PV*topo*100
+
+!=====temperature===================
+let historical_tas=tas00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_tas=tas15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_tas=tas20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_tas=tas25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_tas=tas30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_tas=model_15deg_tas-historical_tas
+let rcp85_20deg_tas=model_20deg_tas-historical_tas
+let rcp85_25deg_tas=model_25deg_tas-historical_tas
+let rcp85_30deg_tas=model_30deg_tas-historical_tas
+
+let hist_tas=historical_tas*topo
+let tas_15deg=rcp85_15deg_tas*topo
+let tas_20deg=rcp85_20deg_tas*topo
+let tas_25deg=rcp85_25deg_tas*topo
+let tas_30deg=rcp85_30deg_tas*topo
+
+!============================VWS===================
+let historical_VWS=VWS00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_VWS=VWS15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_VWS=VWS20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_VWS=VWS25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_VWS=VWS30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_VWS=model_15deg_VWS-historical_VWS
+let rcp85_20deg_VWS=model_20deg_VWS-historical_VWS
+let rcp85_25deg_VWS=model_25deg_VWS-historical_VWS
+let rcp85_30deg_VWS=model_30deg_VWS-historical_VWS
+
+let hist_VWS=historical_VWS*topo
+let VWS_15deg=rcp85_15deg_VWS*topo
+let VWS_20deg=rcp85_20deg_VWS*topo
+let VWS_25deg=rcp85_25deg_VWS*topo
+let VWS_30deg=rcp85_30deg_VWS*topo
+
+!==============================RH=========================
+let historical_RH=RH00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_RH=RH15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_RH=RH20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_RH=RH25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_RH=RH30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_RH=model_15deg_RH-historical_RH
+let rcp85_20deg_RH=model_20deg_RH-historical_RH
+let rcp85_25deg_RH=model_25deg_RH-historical_RH
+let rcp85_30deg_RH=model_30deg_RH-historical_RH
+
+let hist_RH=historical_RH*topo
+let RH_15deg=rcp85_15deg_RH*topo
+let RH_20deg=rcp85_20deg_RH*topo
+let RH_25deg=rcp85_25deg_RH*topo
+let RH_30deg=rcp85_30deg_RH*topo
+
+!==================== RSDS ================================
+let historical_RSDS=RSDS00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_RSDS=RSDS15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_RSDS=RSDS20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_RSDS=RSDS25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_RSDS=RSDS30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_RSDS=model_15deg_RSDS-historical_RSDS
+let rcp85_20deg_RSDS=model_20deg_RSDS-historical_RSDS
+let rcp85_25deg_RSDS=model_25deg_RSDS-historical_RSDS
+let rcp85_30deg_RSDS=model_30deg_RSDS-historical_RSDS
+
+let hist_RSDS=historical_RSDS*topo
+let RSDS_15deg=rcp85_15deg_RSDS*topo
+let RSDS_20deg=rcp85_20deg_RSDS*topo
+let RSDS_25deg=rcp85_25deg_RSDS*topo
+let RSDS_30deg=rcp85_30deg_RSDS*topo
+
+!=================Change in PV induced by RSDS ================
+
+let PV_15deg_RSDS=RSDS_15deg*(c1 + c5*RSDS_15deg+2*c5*RSDS_15deg+c2*hist_tas+c3*hist_vws+c4*hist_rh)*100
+let PV_20deg_RSDS=RSDS_20deg*(c1 + c5*RSDS_20deg+2*c5*RSDS_20deg+c2*hist_tas+c3*hist_vws+c4*hist_rh)*100
+let PV_25deg_RSDS=RSDS_15deg*(c1 + c5*RSDS_25deg+2*c5*RSDS_25deg+c2*hist_tas+c3*hist_vws+c4*hist_rh)*100
+let PV_30deg_RSDS=RSDS_30deg*(c1 + c5*RSDS_30deg+2*c5*RSDS_30deg+c2*hist_tas+c3*hist_vws+c4*hist_rh)*100
+
+!=================Change in PV induced by TAS ================
+
+let PV_15deg_tas=hist_RSDS*c2*tas_15deg*100
+let PV_20deg_tas=hist_RSDS*c2*tas_20deg*100
+let PV_25deg_tas=hist_RSDS*c2*tas_25deg*100
+let PV_30deg_tas=hist_RSDS*c2*tas_30deg*100
+
+
+!=================Change in PV induced by VWS ================
+
+let PV_15deg_vws=hist_RSDS*c3*VWS_15deg*100
+let PV_20deg_vws=hist_RSDS*c3*VWS_20deg*100
+let PV_25deg_vws=hist_RSDS*c3*VWS_25deg*100
+let PV_30deg_vws=hist_RSDS*c3*VWS_30deg*100
+
+
+!=================Change in PV induced by RH ================
+
+let PV_15deg_RH=hist_RSDS*c4*RH_15deg*100
+let PV_20deg_RH=hist_RSDS*c4*RH_20deg*100
+let PV_25deg_RH=hist_RSDS*c4*RH_25deg*100
+let PV_30deg_RH=hist_RSDS*c4*RH_30deg*100
+
+
+!========Key Parameters==================
+        !**** Set parameter for SHAKEY do_key, orient, klab_size, klab_inc, klab_dig, klab_len, kx_lo,     kx_hi, ky_lo, ky_hi
+let do_key=1     !    0 if the key will not be displayed, 1 if it will (0)
+let orient=1       !    0 for horizontal, 1 for vertical (0)
+let klab_size=0.10  !    if non-zero: height of key label characters in inches (0)
+let klab_inc=0     !    if non-zero: every klab_ince key level is labelled (0)
+let klab_dig=1     !    number of sig digits in the key (3)
+let klab_len=8     !    max characters in a key label (9)
+let kx_lo=4.6  !    X coord of left side of key in inches
+let kx_hi=4.8   !    X coord of right side of key in inches
+let ky_lo=1.4   !    Y coord of bottom of key in inches
+let ky_hi=11.5  !    Y coord of top of key in inches
+
+let   npy = 4
+let   npx = 4
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.15,   0.065,   0.02,     0.15,    0.25,   0.032     
+
+
+let rlonD_start =  -20
+let rlonD_stop  =   20
+let rlatD_start =   0
+let rlatD_stop  =   25.2
+
+PPL AXLSZE 0.12,0.12
+
+!==============Plotting ==================
+
+!=====================================Change induced by RSDS===================================
+
+SET VIEW V11
+PPL AXLABP 0,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_RSDS[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS  (a)
+label -30 10 -1 90 0.16 @P7 RSDS
+label -5 28 -1 0 0.20 @P7 GWL1.5
+
+SET VIEW V12
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_RSDS[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS  (b)
+label -5 28 -1 0 0.20 @P7 GWL2.0
+
+SET VIEW V13
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_RSDS[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (c)
+label -5 28 -1 0 0.20 @P7 GWL2.5
+
+SET VIEW V14
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_RSDS[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (d)
+label -5 28 -1 0 0.20 @P7 GWL3.0
+
+!=====================================Change induced by tas===================================
+
+SET VIEW V21
+PPL AXLABP 0,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_tas[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (e)
+label -30 10 -1 90 0.16 @P7 TAS
+
+
+SET VIEW V22
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_tas[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (f)
+
+SET VIEW V23
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_tas[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (g)
+
+
+SET VIEW V24
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_tas[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (h)
+
+
+!=====================================Change induced by VWS===================================
+SET VIEW V31
+PPL AXLABP 0,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_vws[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (i)
+label -30 10 -1 90 0.16 @P7 VWS
+
+SET VIEW V32
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_vws[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (j)
+
+SET VIEW V33
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_vws[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (k)
+
+SET VIEW V34
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_vws[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (l)
+
+!=====================================Change induced by RH===================================
+SET VIEW V41
+PPL AXLABP -1,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_rh[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (m)
+label -30 10 -1 90 0.16 @P7  RH
+
+SET VIEW V42
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_rh[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (n)
+
+SET VIEW V43
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_rh[l=@ave] ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (o)
+
+SET VIEW V44
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/set_up/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_rh[l=@ave] 
+
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 "" 1
+label -20 2 -1 0 0.18 @AS (p)
+label/nouser 3.2 10.2 -1 0 0.14 @AS (%)
+!=================================================================================
+  ELIf `Fig eq 16` then   !  PV power change RCP 8.5
+!================================================================================== 
+use Waf_annual_PV_CombinedData.nc  !d=16
+
+let c1=11.3E-4
+let c2= -4.81E-6 !TAS
+let c3=7.29E-6 !VWS
+let c4=-5.45E-7 !RH
+let c5=-1.45E-7 !RSDS
+let topo=mask[d=15]
+
+!==================== CHange in PV potential============
+let historical_PV=PV00[d=16,k=@ave,GX=topo,GY=topo]
+
+let model_15deg_PV=PV15[d=16,k=@ave,GX=topo,GY=topo] 
+let model_20deg_PV=PV20[d=16,k=@ave,GX=topo,GY=topo]
+let model_25deg_PV=PV25[d=16,k=@ave,GX=topo,GY=topo] 
+let model_30deg_PV=PV30[d=16,k=@ave,GX=topo,GY=topo] 
+
+let rcp85_15deg_PV=model_15deg_PV-historical_PV
+let rcp85_20deg_PV=model_20deg_PV-historical_PV
+let rcp85_25deg_PV=model_25deg_PV-historical_PV
+let rcp85_30deg_PV=model_30deg_PV-historical_PV
+
+let PV_15deg=rcp85_15deg_PV*topo*100
+let PV_20deg=rcp85_20deg_PV*topo*100
+let PV_25deg=rcp85_25deg_PV*topo*100
+let PV_30deg=rcp85_30deg_PV*topo*100
+
+!=====temperature===================
+let historical_tas=tas00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_tas=tas15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_tas=tas20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_tas=tas25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_tas=tas30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_tas=model_15deg_tas-historical_tas
+let rcp85_20deg_tas=model_20deg_tas-historical_tas
+let rcp85_25deg_tas=model_25deg_tas-historical_tas
+let rcp85_30deg_tas=model_30deg_tas-historical_tas
+
+let hist_tas=historical_tas*topo
+let tas_15deg=rcp85_15deg_tas*topo
+let tas_20deg=rcp85_20deg_tas*topo
+let tas_25deg=rcp85_25deg_tas*topo
+let tas_30deg=rcp85_30deg_tas*topo
+
+!============================VWS===================
+let historical_VWS=VWS00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_VWS=VWS15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_VWS=VWS20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_VWS=VWS25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_VWS=VWS30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_VWS=model_15deg_VWS-historical_VWS
+let rcp85_20deg_VWS=model_20deg_VWS-historical_VWS
+let rcp85_25deg_VWS=model_25deg_VWS-historical_VWS
+let rcp85_30deg_VWS=model_30deg_VWS-historical_VWS
+
+let hist_VWS=historical_VWS*topo
+let VWS_15deg=rcp85_15deg_VWS*topo
+let VWS_20deg=rcp85_20deg_VWS*topo
+let VWS_25deg=rcp85_25deg_VWS*topo
+let VWS_30deg=rcp85_30deg_VWS*topo
+
+!==============================RH=========================
+let historical_RH=RH00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_RH=RH15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_RH=RH20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_RH=RH25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_RH=RH30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_RH=model_15deg_RH-historical_RH
+let rcp85_20deg_RH=model_20deg_RH-historical_RH
+let rcp85_25deg_RH=model_25deg_RH-historical_RH
+let rcp85_30deg_RH=model_30deg_RH-historical_RH
+
+let hist_RH=historical_RH*topo
+let RH_15deg=rcp85_15deg_RH*topo
+let RH_20deg=rcp85_20deg_RH*topo
+let RH_25deg=rcp85_25deg_RH*topo
+let RH_30deg=rcp85_30deg_RH*topo
+
+!==================== RSDS ================================
+let historical_RSDS=RSDS00[d=16,GX=topo,GY=topo,k=@ave]
+
+let model_15deg_RSDS=RSDS15[d=16,GX=topo,GY=topo,k=@ave] 
+let model_20deg_RSDS=RSDS20[d=16,GX=topo,GY=topo,k=@ave]
+let model_25deg_RSDS=RSDS25[d=16,GX=topo,GY=topo,k=@ave] 
+let model_30deg_RSDS=RSDS30[d=16,GX=topo,GY=topo,k=@ave] 
+
+let rcp85_15deg_RSDS=model_15deg_RSDS-historical_RSDS
+let rcp85_20deg_RSDS=model_20deg_RSDS-historical_RSDS
+let rcp85_25deg_RSDS=model_25deg_RSDS-historical_RSDS
+let rcp85_30deg_RSDS=model_30deg_RSDS-historical_RSDS
+
+let hist_RSDS=historical_RSDS*topo
+let RSDS_15deg=rcp85_15deg_RSDS*topo
+let RSDS_20deg=rcp85_20deg_RSDS*topo
+let RSDS_25deg=rcp85_25deg_RSDS*topo
+let RSDS_30deg=rcp85_30deg_RSDS*topo
+
+!=================Change in PV induced by RSDS ================
+
+let PV_15deg_RSDS=RSDS_15deg*(c1 + c5*RSDS_15deg+2*c5*RSDS_15deg+c2*hist_tas+c3*hist_vws+c4*hist_rh)*100
+let PV_20deg_RSDS=RSDS_20deg*(c1 + c5*RSDS_20deg+2*c5*RSDS_20deg+c2*hist_tas+c3*hist_vws+c4*hist_rh)*100
+let PV_25deg_RSDS=RSDS_15deg*(c1 + c5*RSDS_25deg+2*c5*RSDS_25deg+c2*hist_tas+c3*hist_vws+c4*hist_rh)*100
+let PV_30deg_RSDS=RSDS_30deg*(c1 + c5*RSDS_30deg+2*c5*RSDS_30deg+c2*hist_tas+c3*hist_vws+c4*hist_rh)*100
+
+!=================Change in PV induced by TAS ================
+
+let PV_15deg_tas=hist_RSDS*c2*tas_15deg*100
+let PV_20deg_tas=hist_RSDS*c2*tas_20deg*100
+let PV_25deg_tas=hist_RSDS*c2*tas_25deg*100
+let PV_30deg_tas=hist_RSDS*c2*tas_30deg*100
+
+
+!=================Change in PV induced by VWS ================
+
+let PV_15deg_vws=hist_RSDS*c3*VWS_15deg*100
+let PV_20deg_vws=hist_RSDS*c3*VWS_20deg*100
+let PV_25deg_vws=hist_RSDS*c3*VWS_25deg*100
+let PV_30deg_vws=hist_RSDS*c3*VWS_30deg*100
+
+
+!=================Change in PV induced by RH ================
+
+let PV_15deg_RH=hist_RSDS*c4*RH_15deg*100
+let PV_20deg_RH=hist_RSDS*c4*RH_20deg*100
+let PV_25deg_RH=hist_RSDS*c4*RH_25deg*100
+let PV_30deg_RH=hist_RSDS*c4*RH_30deg*100
+
+
+
+
+PPL AXLSZE 0.12,0.12
+
+let   npy = 4
+let   npx = 4
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.15,   0.065,   0.02,     0.15,    0.25,   0.032     
+
+
+let rlonD_start =  -20
+let rlonD_stop  =   20
+let rlatD_start =   0
+let rlatD_stop  =   25.2
+
+
+
+!==============Plotting ==================
+
+!=====================================Change induced by RSDS===================================
+
+SET VIEW V11
+PPL AXLABP 0,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_RSDS[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (a)
+label -30 6.0 -1 90 0.12 @P7 TAS-induced 
+label -28 2.5 -1 90 0.12 @P7 changes  in PVpot
+label -5 28 -1 0 0.20 @P7 GWL1.5
+
+SET VIEW V12
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_RSDS[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (b)
+label -5 28 -1 0 0.20 @P7 GWL2.0
+
+SET VIEW V13
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_RSDS[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (c)
+label -5 28 -1 0 0.20 @P7 GWL2.5
+
+SET VIEW V14
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_RSDS[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (d)
+label -5 28 -1 0 0.20 @P7 GWL3.0
+
+!=====================================Change induced by tas===================================
+
+SET VIEW V21
+PPL AXLABP 0,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_tas[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (a)
+label -30 6.0 -1 90 0.12 @P7 TAS-induced 
+label -28 2.5 -1 90 0.12 @P7 changes  in PVpot
+label -5 28 -1 0 0.20 @P7 GWL1.5
+
+SET VIEW V22
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_tas[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (b)
+label -5 28 -1 0 0.20 @P7 GWL2.0
+
+SET VIEW V23
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_tas[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (c)
+label -5 28 -1 0 0.20 @P7 GWL2.5
+
+SET VIEW V24
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_tas[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (d)
+label -5 28 -1 0 0.20 @P7 GWL3.0
+
+!=====================================Change induced by VWS===================================
+SET VIEW V31
+PPL AXLABP 0,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_vws[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (e)
+label -30 6.0 -1 90 0.12 @P7 WVS-induced 
+label -28 2.5 -1 90 0.12 @P7 changes  in PVpot
+
+SET VIEW V32
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_vws[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (f)
+
+SET VIEW V33
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_vws[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (g)
+
+SET VIEW V34
+PPL AXLABP 0,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_vws[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (h)
+
+!=====================================Change induced by RH===================================
+SET VIEW V41
+PPL AXLABP -1,-1
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_15deg_rh[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (i)
+label -30 6.0 -1 90 0.12 @P7 RH-induced 
+label -28 2.5 -1 90 0.12 @P7 changes  in PVpot
+
+SET VIEW V42
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_20deg_rh[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (j)
+
+SET VIEW V43
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_25deg_rh[l=@ave] ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (k)
+
+SET VIEW V44
+PPL AXLABP -1,0
+fill/pal=orange_blue/nolab/set_up/nokey/xlimit=`rlonD_start`:`rlonD_stop`:4/ylim = `rlatD_start`:`rlatD_stop`:2/lev=(-inf)(-0.3,0.3,0.05)(inf) PV_30deg_rh[l=@ave] 
+PPL SHAKEY `do_key`, `orient`, `klab_size`, `klab_inc`, `klab_dig`, `klab_len`,`kx_lo`, `kx_hi`, `ky_lo`, `ky_hi` ;\
+PPL fill ; go land 7 "" 1
+label -19 0.6 -1 0 0.12 @P1 (l)
+label/nouser 3.5 8.5 -1 0 0.12 @AS (%)
+
+
+
+!================================================================================= 
+  ELIf `Fig eq 17` then   !  PV power change RCP 8.5  monthly variation
+!================================================================================== 
+ DEFINE AXIS/Z=1:31:1 yy
+DEFINE GRID/Z=yy grd
+file/order=Z/var="GWL15_1,GWL15_2,GWL15_3,GWL15_4,GWL15_5,GWL15_6,GWL15_7,GWL15_8"/GRID=grd GWL15.txt
+file/order=Z/var="GWL20_1,GWL20_2,GWL20_3,GWL20_4,GWL20_5,GWL20_6,GWL20_7,GWL20_8"/GRID=grd GWL20.txt
+file/order=Z/var="GWL25_1,GWL25_2,GWL25_3,GWL25_4,GWL25_5,GWL25_6,GWL25_7,GWL25_8"/GRID=grd GWL25.txt
+file/order=Z/var="GWL30_1,GWL30_2,GWL30_3,GWL30_4,GWL30_5,GWL30_6,GWL30_7,GWL30_8"/GRID=grd GWL30.txt
+
+let GCM1="CCCma"
+let GCM2="CNRM"
+let GCM3="CSIRO"
+let GCM4="HadGEM"
+let GCM5="ICHEC"
+let GCM6="IPSL"
+let GCM7="MIROC"
+let GCM8="NCC"
+
+
+let   npy = 1
+let   npx = 1
+! go multi_view [rows],[columns], [xsize],[xstart],[xgap], [ysize],[ystart],[ygap],[prefix] 
+  go multi_view `npy`,  `npx`,      0.8,   0.07,   0.02,     0.8,    0.1,   0.032     
+
+SET VIEW V11
+PPL AXLABP 0,-1
+PPL AXLSZE 0.08,0.08
+
+let Pmax = 2100
+let Pmin=1995
+let TheFUT  = {0, 0,  0,  0, 0,  0,  0,  0, 0, 0,  0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+go bar_chart3 poly/fill/line/pal=blue_light/nolabel/hlimit=2.2:17.5:2.0/vlimit=`Pmin`:`Pmax`:2 TheFUT
+let ParLab = 1990
+let icity = 0
+let px = 2.3;
+let pbint1 = 0.3
+let pbint2 = 1.1
+
+let icity=0
+repeat /range = 1:8 (let icity = `icity + 1`; \
+        let GCM=  GCM`icity`; \
+	  PPL SHASET RESET;\
+        let Parm   = GWL15_`icity`[d=16]; \
+        let Par     = Parm; let ilab = 1; \
+        let color=10; go Plot_Boxplot_GWL.jnl; \
+        let px = `px + pbint1`; \
+        let Parm     = GWL20_`icity`[d=17]; \
+        let Par     = Parm; let ilab = 0;\
+	  let color=9; go Plot_Boxplot_GWL.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = GWL25_`icity`[d=18]; \
+        let Par     = Parm; let ilab = 0; \
+	  PPL SHASET RESET;\
+	  let color=12; go Plot_Boxplot_GWL.jnl; \
+	  let px = `px + pbint1`; \
+        let Parm    = GWL30_`icity`[d=19]; \
+        let Par     = Parm; let ilab = 0; \
+	  let color=8; go Plot_Boxplot_GWL.jnl; \
+        let px = `px + pbint2`; \
+         )
+let xpts = {7,8.2}; \
+let ypts = {2096,2096}; \
+plot/vs/over/line=10/thick/nolab xpts,ypts
+label 8.20  2095  -1 0   0.12 @P1 GWL1.5;\
+
+let ypts = {2090,2090}; \
+plot/vs/over/line=9/thick/nolab xpts,ypts
+label 8.20  2089  -1 0   0.12 @P1 GWL2.0;\
+
+let xpts = {9.8,10.9}; \
+let ypts = {2096,2096}; \
+plot/vs/over/line=12/thick/nolab xpts,ypts
+label 10.9  2095  -1 0   0.12 @P1 GWL2.5;\
+
+let ypts = {2090,2090}; \
+plot/vs/over/line=8/thick/nolab xpts,ypts
+label 10.9  2089  -1 0   0.12 @P1 GWL3.0;\
+
+plot/vs/over/nolab/line=1 {6.85,12.2,12.2,6.85,6.85}, {2088,2088,2099,2099,2088};\
+
+label/nouser -0.65  3 -1 90   0.13 @AS Years
+exit
+	
+ endif
+!=================================================================================
+ exit
+
+
+
+
+
+
+

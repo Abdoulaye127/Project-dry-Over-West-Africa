@@ -1,0 +1,84 @@
+! Clear previous settings
+CANCEL DATA/ALL
+CANCEL WINDOW/ALL
+SET WINDOW/NEW  ! Set new window for plotting
+
+! Adjust the axis size for better visualization
+PPL AXLSZE 0.20, 0.20
+
+! Set aspect ratio and increase window size
+SET WINDOW/ASPECT = 1.0/size=3  
+
+!========================= Historical Data =============================
+use cdd_pr_day_Model_historical_1985_2014_WEST_AFRICA_Ensmean.nc
+
+!========================= Near Future Scenarios =======================
+use cdd_pr_day_ssp126_2031-2060_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp245_2031-2060_west_Africa_Ensmean.nc
+use cdd_pr_day_ssp585_2031-2060_west_Africa_Ensmean.nc
+
+!========================= Far Future Scenarios =====================
+!USE cdd_pr_day_ssp126_2071-2100_west_Africa_Ensmean.nc
+!USE cdd_pr_day_ssp245_2071-2100_west_Africa_Ensmean.nc
+!USE cdd_pr_day_ssp585_2071-2100_west_Africa_Ensmean.nc
+
+!=================== Calculation of Consecutive Dry Days =====================
+LET historical = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave, d=1, k=@ave]
+
+LET ssp126 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave, d=2, k=@ave, GT=historical@asn]
+LET ssp245 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave, d=3, k=@ave, GT=historical@asn]
+LET ssp585 = CONSECUTIVE_DRY_DAYS_INDEX_PER_TIME_PERIOD[l=@ave, d=4, k=@ave, GT=historical@asn]
+
+!=================== Projection Differences (Near Future - Historical) =====================
+LET proj_ssp126 = ssp126 - historical
+LET proj_ssp245 = ssp245 - historical
+LET proj_ssp585 = ssp585 - historical
+
+!=================== Panel Setup =====================
+LET npy = 3
+LET npx = 3
+
+! Set up multi-view with adjusted gaps
+GO multi_view npy, npx, 0.25, 0.05, 0.05, 0.1, 0.4, 0.05  
+
+!=================== Plotting =====================
+
+SET VIEWPORT V11
+PPL AXLABP -1, -1
+FILL/PAL=cmocean_solar/NOLABEL historical
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.18 @P7 Historical
+LABEL 28, 6, -1, 90, 0.12 @P1
+
+SET VIEWPORT V12
+PPL AXLABP 0, 0
+FILL/PAL=cmocean_solar/NOLABEL ssp126
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.18 @P7 Scenario SSP126
+
+SET VIEWPORT V13
+PPL AXLABP 0, 0
+FILL/PAL=orange_purple/NOLABEL/LEV=(-inf)(-3,3,1)(inf) proj_ssp126
+GO land 7 "" 1
+LABEL -5, 33, -1, 0, 0.18 @P7 SSP126 - Historical
+
+SET VIEWPORT V22
+PPL AXLABP 0, 0
+FILL/PAL=cmocean_solar/NOLABEL ssp245
+GO land 7 "" 1
+
+SET VIEWPORT V23
+PPL AXLABP 0, 0
+FILL/PAL=orange_purple/NOLABEL/LEV=(-inf)(-3,3,1)(inf) proj_ssp245
+GO land 7 "" 1
+
+SET VIEWPORT V32
+PPL AXLABP 0, 0
+FILL/PAL=cmocean_solar/NOLABEL ssp585
+GO land 7 "" 1
+
+SET VIEWPORT V33
+PPL AXLABP 0, 0
+FILL/PAL=orange_purple/NOLABEL/LEV=(-inf)(-3,3,1)(inf) proj_ssp585
+GO land 7 "" 1
+

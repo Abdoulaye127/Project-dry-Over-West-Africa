@@ -1,0 +1,50 @@
+SET MEMORY/SIZE = 10000  ! Set memory
+CANCEL DATA /ALL         ! Cancel all data
+CANCEL WIN /ALL          ! Cancel all windows
+SET WIN/New              ! Set new window
+
+PPL AXLSZE 0.16,0.16
+PPL AXLSZE 0.12,0.12
+SET WINDOW/ASPECT = 0.7/size=2
+
+! Load the datasets
+SET DATA "cdd_chirps-v2.0.days_p25_1985_2014_REFERENCE.nc"
+SET DATA "cdd_pr_day_Model_historical_1985_2014_WEST_AFRICA_Ensmean.nc"
+
+! Define the variables from the datasets
+LET ref_cdd = consecutive_dry_days_index_per_time_period[d=1,l=1]
+LET ensmean_cdd = consecutive_dry_days_index_per_time_period[d=1,k=1,l=1]  ! Adjusted to include surface dimension
+
+! Calculate the bias (Ensmean - Reference)
+LET bias_cdd = ensmean_cdd - ref_cdd
+
+! Define the color scale
+DEFINE VIEWPORT/X=0.1:0.9/Y=0.6:0.9 ref_view
+DEFINE VIEWPORT/X=0.1:0.9/Y=0.3:0.6 ensmean_view
+DEFINE VIEWPORT/X=0.1:0.9/Y=0.0:0.3 bias_view
+
+! Set the range for plotting (color scale from 0 to 366)
+SET REGION/X=-20:20/Y=0:30  ! Adjust to your region of interest (example is for West Africa)
+
+! Plot Reference Data (First Subplot)
+SET VIEW ref_view
+SHADE/PAL=rainbow/LEVELS=(0,366,20) ref_cdd
+GO basemap  ! Correct the command to use the default axes
+LABEL -20 0 0 0 0.15 "Reference"
+
+! Plot Ensemble Mean Data (Second Subplot)
+SET VIEW ensmean_view
+SHADE/PAL=rainbow/LEVELS=(0,366,20) ensmean_cdd
+GO basemap
+LABEL -20 0 0 0 0.15 "Ensmean"
+
+! Plot Bias (Ensmean - Reference) (Third Subplot)
+SET VIEW bias_view
+SHADE/PAL=rainbow/LEVELS=(-100,100,10) bias_cdd
+GO basemap
+LABEL -20 0 0 0 0.15 "Bias:"
+
+! Show the final plot
+FRAME/FILE="cdd_bias_plot.gif"
+
+

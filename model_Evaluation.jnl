@@ -1,0 +1,41 @@
+SET MEMORY/SIZE = 10000 ! set memory
+can data /all ! cancel all data
+can win /all ! cancel all windows
+set win/new ! set new window
+
+PPL AXLSZE 0.20,0.20
+PPL AXLSZE 0.20,0.20
+SET WINDOW/ASPECT = 1.0/size=3  ! Increase aspect ratio and size
+
+! Model evaluation
+
+
+!REFERENCE
+use cdd_Merged_Chirps_1985_2014_p05_WestAfrica.nc
+
+
+! MODEL HISTORICAL
+use cdd_pr_day_Model_historical_1985_2014_WEST_AFRICA_Ensmean.nc
+
+
+
+
+! Set up multi-view with reduced gaps to fit within the window
+GO multi_view npy, npx, 0.25, 0.09, 0.05, 0.15, 0.4, 0.05
+
+set VIEW V11
+PPL AXLABP -1 -1
+fill/pal=dark_land_sea/nolabel obersvation_data;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 REFERENCE
+label 28 6 -1 90 0.12 @P1 CDD
+
+set VIEW V12
+PPL AXLABP 0 0
+fill/pal=dark_land_sea/nolabel model;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 ENSMEAN
+
+set VIEW V13
+PPL AXLABP 0 0
+fill/pal=orange_purple/nolabel/lev=(-inf)(-3,3,1)(inf) bias ;go land 7 "" 1
+label -5 33 -1 0 0.18 @P7 ENSMEAN - REFERENCE
+
